@@ -112,7 +112,7 @@ export default function Home() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">AI Image Generator</h1>
-                <p className="text-sm text-gray-500">Powered by Maya-29 Model</p>
+                <p className="text-sm text-gray-500">Powered by FLUX Schnell Model</p>
               </div>
             </div>
             
@@ -220,7 +220,7 @@ export default function Home() {
                   <div className="w-64 bg-gray-200 rounded-full h-2">
                     <div className="bg-primary h-2 rounded-full animate-pulse" style={{ width: '45%' }}></div>
                   </div>
-                  <p className="text-xs text-gray-500 mt-2">Processing with Maya-29 model...</p>
+                  <p className="text-xs text-gray-500 mt-2">Processing with FLUX Schnell model...</p>
                 </div>
               ) : currentImage ? (
                 // Generated Image Display

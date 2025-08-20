@@ -68,18 +68,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { prompt } = generateImageRequestSchema.parse(req.body);
 
-      // Call Replicate API
+      // Call Replicate API with FLUX model
       const output = await replicate.run(
-        "mayaman/maya-29:dd86b01b10e89fd41b1b6d60b6b8d3bf5c8a7c58b5e0772b7b4f73e63adab34",
+        "black-forest-labs/flux-schnell",
         {
           input: {
             prompt: prompt,
-            width: 1024,
-            height: 1024,
             num_outputs: 1,
-            scheduler: "K_EULER",
-            num_inference_steps: 50,
-            guidance_scale: 7.5,
+            aspect_ratio: "1:1",
+            output_format: "png",
+            output_quality: 80
           }
         }
       ) as string[];
@@ -104,7 +102,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         localPath,
         fileSize: stats.size,
         resolution: "1024x1024",
-        modelUsed: "mayaman/maya-29",
+        modelUsed: "black-forest-labs/flux-schnell",
       });
 
       res.json({
