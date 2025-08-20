@@ -4,51 +4,55 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(210 25% 7.8431%);
-  --card: hsl(180 6.6667% 97.0588%);
-  --card-foreground: hsl(210 25% 7.8431%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(210 25% 7.8431%);
-  --primary: hsl(248.4 73.1% 60.8%);
-  --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(210 25% 7.8431%);
-  --secondary-foreground: hsl(0 0% 100%);
-  --muted: hsl(240 1.9608% 90%);
-  --muted-foreground: hsl(210 25% 7.8431%);
-  --accent: hsl(211.5789 51.3514% 92.7451%);
-  --accent-foreground: hsl(248.4 73.1% 60.8%);
-  --destructive: hsl(356.3033 90.5579% 54.3137%);
-  --destructive-foreground: hsl(0 0% 100%);
-  --border: hsl(201.4286 30.4348% 90.9804%);
-  --input: hsl(200 23.0769% 97.4510%);
-  --ring: hsl(248.4 73.1% 60.8%);
-  --chart-1: hsl(248.4 73.1% 60.8%);
-  --chart-2: hsl(159.7826 100% 36.0784%);
-  --chart-3: hsl(42.0290 92.8251% 56.2745%);
-  --chart-4: hsl(147.1429 78.5047% 41.9608%);
-  --chart-5: hsl(341.4894 75.2000% 50.9804%);
-  --sidebar: hsl(180 6.6667% 97.0588%);
-  --sidebar-foreground: hsl(210 25% 7.8431%);
-  --sidebar-primary: hsl(248.4 73.1% 60.8%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(211.5789 51.3514% 92.7451%);
-  --sidebar-accent-foreground: hsl(248.4 73.1% 60.8%);
-  --sidebar-border: hsl(205.0000 25.0000% 90.5882%);
-  --sidebar-ring: hsl(248.4 73.1% 60.8%);
-  --font-sans: 'Inter', 'Open Sans', sans-serif;
+  /* Futuristic streetwear color palette - silver and red theme */
+  --background: hsl(220 15% 8%);
+  --foreground: hsl(0 0% 95%);
+  --card: hsl(220 20% 12%);
+  --card-foreground: hsl(0 0% 95%);
+  --popover: hsl(220 20% 12%);
+  --popover-foreground: hsl(0 0% 95%);
+  --primary: hsl(0 85% 60%);
+  --primary-foreground: hsl(0 0% 98%);
+  --secondary: hsl(220 15% 18%);
+  --secondary-foreground: hsl(0 0% 80%);
+  --muted: hsl(220 15% 15%);
+  --muted-foreground: hsl(0 0% 60%);
+  --accent: hsl(0 0% 75%);
+  --accent-foreground: hsl(220 15% 8%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(220 15% 25%);
+  --input: hsl(220 20% 15%);
+  --ring: hsl(0 85% 60%);
+  --chart-1: hsl(0 85% 60%);
+  --chart-2: hsl(0 0% 75%);
+  --chart-3: hsl(220 15% 25%);
+  --chart-4: hsl(0 85% 45%);
+  --chart-5: hsl(0 0% 50%);
+  --sidebar: hsl(220 20% 12%);
+  --sidebar-foreground: hsl(0 0% 95%);
+  --sidebar-primary: hsl(0 85% 60%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(220 15% 18%);
+  --sidebar-accent-foreground: hsl(0 0% 80%);
+  --sidebar-border: hsl(220 15% 25%);
+  --sidebar-ring: hsl(0 85% 60%);
+  --font-sans: 'Inter', 'JetBrains Mono', sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: Menlo, monospace;
-  --radius: 1.3rem;
-  --surface: hsl(0 0% 98.04%);
-  --shadow-2xs: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 1px 2px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 1px 2px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 2px 4px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 4px 6px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 8px 10px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00);
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 0.25rem;
+  --surface: hsl(220 15% 10%);
+  --tech-red: hsl(0 85% 60%);
+  --tech-silver: hsl(0 0% 75%);
+  --tech-silver-dark: hsl(0 0% 50%);
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.3);
+  --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.4);
+  --shadow-sm: 0px 2px 4px 0px hsl(0 0% 0% / 0.5);
+  --shadow: 0px 4px 8px 0px hsl(0 0% 0% / 0.6);
+  --shadow-md: 0px 6px 12px 0px hsl(0 0% 0% / 0.7);
+  --shadow-lg: 0px 8px 16px 0px hsl(0 0% 0% / 0.8);
+  --shadow-xl: 0px 12px 24px 0px hsl(0 0% 0% / 0.9);
+  --shadow-2xl: 0px 16px 32px 0px hsl(0 0% 0% / 1.0);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
@@ -90,15 +94,7 @@
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: 1.3rem;
-  --surface: hsl(0 0% 3.92%);
-  --shadow-2xs: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 1px 2px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 1px 2px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 2px 4px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 4px 6px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00), 0px 8px 10px -1px hsl(248.4 73.1% 60.8% / 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(248.4 73.1% 60.8% / 0.00);
+  --surface: hsl(220 15% 10%);
 }
 
 @layer base {
@@ -113,4 +109,57 @@
 
 .bg-surface {
   background-color: var(--surface);
+}
+
+/* Futuristic tech-streetwear effects */
+@layer components {
+  .tech-glow {
+    box-shadow: 
+      0 0 20px hsl(var(--tech-red) / 0.3),
+      0 0 40px hsl(var(--tech-red) / 0.1),
+      inset 0 1px 0 hsl(0 0% 100% / 0.1);
+  }
+  
+  .silver-glow {
+    box-shadow: 
+      0 0 20px hsl(var(--tech-silver) / 0.2),
+      0 0 40px hsl(var(--tech-silver) / 0.05),
+      inset 0 1px 0 hsl(0 0% 100% / 0.1);
+  }
+  
+  .tech-border {
+    position: relative;
+    border: 1px solid hsl(var(--border));
+  }
+  
+  .tech-border::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(135deg, 
+      hsl(var(--tech-red)) 0%, 
+      hsl(var(--tech-silver)) 50%, 
+      hsl(var(--tech-red)) 100%);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.6;
+  }
+  
+  .cyber-text {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, 
+      hsl(var(--tech-red)) 0%, 
+      hsl(var(--tech-silver)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }

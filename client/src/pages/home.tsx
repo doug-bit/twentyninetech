@@ -108,16 +108,16 @@ export default function Home() {
   const isGenerating = generateMutation.isPending;
 
   return (
-    <div className="min-h-screen flex flex-col bg-surface relative">
+    <div className="min-h-screen flex flex-col bg-background relative">
       {/* Main Content */}
-      <main className="flex-1 px-4 py-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+      <main className="flex-1 px-6 py-12">
+        <div className="max-w-4xl mx-auto space-y-12">
           
           {/* Prompt Input */}
-          <Card className="bg-white rounded-2xl shadow-lg border border-gray-200">
-            <CardContent className="p-6">
+          <Card className="bg-card tech-border silver-glow">
+            <CardContent className="p-8">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="prompt"
@@ -127,9 +127,9 @@ export default function Home() {
                           <div className="relative">
                             <Textarea
                               {...field}
-                              rows={3}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-gray-900 placeholder-gray-500"
-                              placeholder="Describe your image..."
+                              rows={4}
+                              className="w-full px-6 py-4 bg-input border border-border focus:border-primary focus:ring-2 focus:ring-primary/50 resize-none text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300"
+                              placeholder="DESCRIBE YOUR VISION..."
                             />
                           </div>
                         </FormControl>
@@ -142,14 +142,14 @@ export default function Home() {
                     <Button 
                       type="submit" 
                       disabled={isGenerating || !promptValue.trim()}
-                      className="bg-primary hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors duration-200 flex items-center space-x-2"
+                      className="bg-primary hover:bg-primary/80 text-primary-foreground px-8 py-4 font-mono font-bold text-sm tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
                     >
                       {isGenerating ? (
-                        <Loader2 className="animate-spin" />
+                        <Loader2 className="animate-spin mr-2" />
                       ) : (
-                        <Wand2 />
+                        <Wand2 className="mr-2" />
                       )}
-                      <span>{isGenerating ? "Generating..." : "Generate"}</span>
+                      <span>{isGenerating ? "PROCESSING..." : "GENERATE"}</span>
                     </Button>
                   </div>
                 </form>
@@ -158,24 +158,27 @@ export default function Home() {
           </Card>
 
           {/* Image Display */}
-          <Card className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+          <Card className="bg-card tech-border overflow-hidden">
             {/* Image Container */}
             <div className="relative">
               {isGenerating ? (
                 // Loading State
-                <div className="aspect-square bg-gray-100 flex flex-col items-center justify-center">
-                  <div className="flex space-x-2 mb-4">
-                    <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-                    <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                <div className="aspect-square bg-muted flex flex-col items-center justify-center">
+                  <div className="flex space-x-3 mb-8">
+                    <div className="w-4 h-4 bg-primary animate-pulse"></div>
+                    <div className="w-4 h-4 bg-accent animate-pulse" style={{ animationDelay: '0.3s' }}></div>
+                    <div className="w-4 h-4 bg-primary animate-pulse" style={{ animationDelay: '0.6s' }}></div>
                   </div>
-                  <div className="w-64 bg-gray-200 rounded-full h-2">
-                    <div className="bg-primary h-2 rounded-full animate-pulse" style={{ width: '45%' }}></div>
+                  <div className="w-80 bg-border h-1 overflow-hidden">
+                    <div className="bg-gradient-to-r from-primary to-accent h-full animate-pulse transition-all duration-1000" style={{ width: '60%' }}></div>
+                  </div>
+                  <div className="mt-6 text-muted-foreground cyber-text text-xs tracking-widest">
+                    NEURAL PROCESSING
                   </div>
                 </div>
               ) : currentImage ? (
                 // Generated Image Display
-                <div className="aspect-square bg-gray-100 flex items-center justify-center relative">
+                <div className="aspect-square relative tech-glow">
                   <img 
                     src={`/api/images/${currentImage.id}`}
                     alt={`Generated image: ${currentImage.prompt}`}
@@ -183,11 +186,11 @@ export default function Home() {
                   />
                   
                   {/* Image Actions Overlay */}
-                  <div className="absolute top-4 right-4 flex space-x-2">
+                  <div className="absolute top-6 right-6 flex space-x-3">
                     <Button 
                       size="sm"
                       variant="secondary"
-                      className="bg-white bg-opacity-90 hover:bg-opacity-100 shadow-md"
+                      className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm tech-border"
                       onClick={handleDownload}
                     >
                       <Download className="h-4 w-4" />
@@ -195,45 +198,45 @@ export default function Home() {
                     <Button 
                       size="sm"
                       variant="secondary"
-                      className="bg-white bg-opacity-90 hover:bg-opacity-100 shadow-md"
+                      className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm tech-border"
                       onClick={handleShare}
                     >
                       <Share2 className="h-4 w-4" />
                     </Button>
                   </div>
-
-
                 </div>
               ) : (
                 // Empty State
-                <div className="aspect-square bg-gray-50 flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
-                  <div className="w-20 h-20 flex items-center justify-center mb-4">
+                <div className="aspect-square bg-muted flex flex-col items-center justify-center border-2 border-dashed border-border">
+                  <div className="w-24 h-24 flex items-center justify-center mb-6">
                     <svg 
-                      width="80" 
-                      height="80" 
-                      viewBox="0 0 80 80" 
-                      className="opacity-60"
+                      width="96" 
+                      height="96" 
+                      viewBox="0 0 96 96" 
+                      className="opacity-70"
                     >
-                      <rect width="80" height="80" fill="#000000" rx="8"/>
+                      <rect width="96" height="96" fill="#000000" rx="4"/>
                       <text 
-                        x="40" 
-                        y="32" 
+                        x="48" 
+                        y="38" 
                         textAnchor="middle" 
                         fill="white" 
-                        fontSize="12" 
+                        fontSize="14" 
                         fontWeight="bold" 
-                        fontFamily="Arial, sans-serif"
+                        fontFamily="JetBrains Mono, monospace"
+                        letterSpacing="0.1em"
                       >
                         HYPE
                       </text>
                       <text 
-                        x="40" 
-                        y="48" 
+                        x="48" 
+                        y="58" 
                         textAnchor="middle" 
                         fill="white" 
-                        fontSize="12" 
+                        fontSize="14" 
                         fontWeight="bold" 
-                        fontFamily="Arial, sans-serif"
+                        fontFamily="JetBrains Mono, monospace"
+                        letterSpacing="0.1em"
                       >
                         BEAST
                       </text>
@@ -254,26 +257,29 @@ export default function Home() {
 
 
       {/* Fixed Lenovo Logo */}
-      <div className="fixed bottom-4 left-4 z-50">
-        <svg 
-          width="120" 
-          height="40" 
-          viewBox="0 0 120 40" 
-          className="opacity-80 hover:opacity-100 transition-opacity"
-        >
-          <rect width="120" height="40" fill="#E4002B" rx="4"/>
-          <text 
-            x="60" 
-            y="28" 
-            textAnchor="middle" 
-            fill="white" 
-            fontSize="18" 
-            fontWeight="bold" 
-            fontFamily="Arial, sans-serif"
+      <div className="fixed bottom-6 left-6 z-50">
+        <div className="tech-border silver-glow p-3">
+          <svg 
+            width="120" 
+            height="40" 
+            viewBox="0 0 120 40" 
+            className="opacity-90 hover:opacity-100 transition-opacity"
           >
-            lenovo
-          </text>
-        </svg>
+            <rect width="120" height="40" fill="#E4002B" rx="2"/>
+            <text 
+              x="60" 
+              y="28" 
+              textAnchor="middle" 
+              fill="white" 
+              fontSize="16" 
+              fontWeight="bold" 
+              fontFamily="JetBrains Mono, monospace"
+              letterSpacing="0.05em"
+            >
+              LENOVO
+            </text>
+          </svg>
+        </div>
       </div>
     </div>
   );
