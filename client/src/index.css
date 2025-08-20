@@ -175,4 +175,55 @@
       transform: translateX(-50%);
     }
   }
+  
+  .maya-man-bg {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .maya-man-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        hsl(var(--muted-foreground) / 0.03) 20px,
+        hsl(var(--muted-foreground) / 0.03) 40px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 20px,
+        hsl(var(--muted-foreground) / 0.03) 20px,
+        hsl(var(--muted-foreground) / 0.03) 40px
+      );
+    z-index: 0;
+  }
+  
+  .maya-man-bg::after {
+    content: 'MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN MAYA MAN ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    line-height: 1.8;
+    color: hsl(var(--muted-foreground) / 0.08);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    transform: rotate(-15deg) scale(1.2);
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
 }

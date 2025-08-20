@@ -111,13 +111,13 @@ export default function Home() {
   const isGenerating = generateMutation.isPending;
 
   return (
-    <div className="h-screen flex flex-col bg-background relative overflow-hidden">
+    <div className="h-screen flex flex-col bg-background relative overflow-hidden maya-man-bg">
       {/* Main Content - Maximized Layout */}
       <main className="flex-1 p-3 flex flex-col">
         <div className="max-w-5xl mx-auto flex-1 flex flex-col gap-3">
           
-          {/* Image Display - LED Wall Portrait Aspect Ratio (4:3) - Larger */}
-          <div className="w-full aspect-[4/3] relative flex-1 min-h-0">
+          {/* Image Display - Post Feed Aspect Ratio (3:4) - Larger */}
+          <div className="w-full aspect-[3/4] relative flex-1 min-h-0">
             {isGenerating ? (
               // Loading State
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border">
