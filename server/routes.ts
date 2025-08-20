@@ -62,9 +62,12 @@ function generateFilename(prompt: string): string {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   await ensureImagesDirectory();
+  
+  // Base path for deployment
+  const basePath = process.env.BASE_PATH || '';
 
   // Generate image endpoint
-  app.post("/api/generate", async (req, res) => {
+  app.post(`${basePath}/api/generate`, async (req, res) => {
     try {
       const { prompt } = generateImageRequestSchema.parse(req.body);
 
@@ -102,8 +105,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get file stats for size
       const stats = await fs.stat(localPath);
       
-      // Save to storage with local URL for frontend
-      const localUrl = `/api/images/${filename}`;
+      // Save to storage with local URL for frontend  
+      const localUrl = `${basePath}/api/images/${filename}`;
       console.log("Saving image with localUrl:", localUrl);
       
       const savedImage = await storage.saveGeneratedImage({
@@ -133,7 +136,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get recent images
-  app.get("/api/images/recent", async (req, res) => {
+  app.get(`${basePath}/api/images/recent`, async (req, res) => {
     try {
       const limit = parseInt(req.query.limit as string) || 12;
       const images = await storage.getRecentImages(limit);
@@ -147,7 +150,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get image count (must come before the generic image serving route)
-  app.get("/api/images/count", async (req, res) => {
+  app.get(`${basePath}/api/images/count`, async (req, res) => {
     try {
       const count = await storage.getImageCount();
       res.json({ count });
@@ -158,7 +161,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Serve generated images
-  app.get("/api/images/:filename", async (req, res) => {
+  app.get(`${basePath}/api/images/:filename`, async (req, res) => {
     try {
       const filename = req.params.filename;
       const imagePath = path.join(IMAGES_DIR, filename);
