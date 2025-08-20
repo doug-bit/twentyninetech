@@ -47,13 +47,16 @@ export default function Home() {
         setShowSaveSuccess(true);
         setTimeout(() => setShowSaveSuccess(false), 3000);
         
+        // Automatically download the image to user's computer
+        downloadImageToComputer(data.image.id, data.image.prompt);
+        
         // Invalidate queries to refresh data
         queryClient.invalidateQueries({ queryKey: ["/api/images/recent"] });
         queryClient.invalidateQueries({ queryKey: ["/api/images/count"] });
         
         toast({
           title: "Image Generated Successfully",
-          description: "Your image has been generated and saved locally.",
+          description: "Your image has been generated and downloaded.",
         });
         
         form.reset();
@@ -77,14 +80,18 @@ export default function Home() {
     setCurrentImage(image);
   };
 
+  const downloadImageToComputer = (imageId: string, prompt: string) => {
+    const link = document.createElement('a');
+    link.href = `/api/images/${imageId}`;
+    link.download = `generated-image-${prompt.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleDownload = () => {
     if (currentImage) {
-      const link = document.createElement('a');
-      link.href = `/api/images/${currentImage.id}`;
-      link.download = `generated-image-${currentImage.id}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      downloadImageToComputer(currentImage.id, currentImage.prompt);
     }
   };
 
