@@ -146,8 +146,39 @@ export default function Home() {
               {/* Base preview area - always visible */}
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border border-dashed">
                 {!isGenerating && !currentImage && (
-                  <div className="text-muted-foreground/40 text-sm font-mono tracking-wider">
-                    Ready to generate
+                  <div className="w-12 h-12 flex items-center justify-center">
+                    <svg 
+                      width="48" 
+                      height="48" 
+                      viewBox="0 0 48 48" 
+                      className="opacity-60"
+                    >
+                      <rect width="48" height="48" fill="#000000" rx="2"/>
+                      <text 
+                        x="24" 
+                        y="20" 
+                        textAnchor="middle" 
+                        fill="white" 
+                        fontSize="8" 
+                        fontWeight="bold" 
+                        fontFamily="JetBrains Mono, monospace"
+                        letterSpacing="0.1em"
+                      >
+                        HYPE
+                      </text>
+                      <text 
+                        x="24" 
+                        y="32" 
+                        textAnchor="middle" 
+                        fill="white" 
+                        fontSize="8" 
+                        fontWeight="bold" 
+                        fontFamily="JetBrains Mono, monospace"
+                        letterSpacing="0.1em"
+                      >
+                        BEAST
+                      </text>
+                    </svg>
                   </div>
                 )}
               </div>
@@ -287,31 +318,7 @@ export default function Home() {
 
 
 
-      {/* Fixed Lenovo Logo - Aligned with Reset Button */}
-      <div className="fixed bottom-[140px] left-4 z-50">
-        <div className="tech-border silver-glow p-2 bg-card/20 backdrop-blur-sm">
-          <svg 
-            width="100" 
-            height="32" 
-            viewBox="0 0 100 32" 
-            className="opacity-80 hover:opacity-100 transition-all duration-500"
-          >
-            <rect width="100" height="32" fill="#E4002B" rx="1"/>
-            <text 
-              x="50" 
-              y="22" 
-              textAnchor="middle" 
-              fill="white" 
-              fontSize="13" 
-              fontWeight="500" 
-              fontFamily="JetBrains Mono, monospace"
-              letterSpacing="0.1em"
-            >
-              LENOVO
-            </text>
-          </svg>
-        </div>
-      </div>
+
     </div>
   );
 }
