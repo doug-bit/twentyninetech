@@ -68,17 +68,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { prompt } = generateImageRequestSchema.parse(req.body);
 
-      // Call Replicate API with Stable Diffusion XL model
+      // Call Replicate API with Maya-29 model
       const output = await replicate.run(
-        "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
+        "mayaman/maya-29",
         {
           input: {
-            prompt: prompt,
-            width: 768,
-            height: 1024, // 3:4 aspect ratio for post feed format
+            prompt: `MM29 ${prompt}`, // Include trigger word for Maya model
+            aspect_ratio: "3:4", // 3:4 aspect ratio for post feed format
             num_outputs: 1,
-            num_inference_steps: 20,
-            guidance_scale: 7.5
+            num_inference_steps: 28,
+            guidance_scale: 3.5,
+            model: "dev",
+            output_format: "png",
+            output_quality: 90
           }
         }
       ) as string[];
@@ -102,8 +104,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         imageUrl,
         localPath,
         fileSize: stats.size,
-        resolution: "768x1024",
-        modelUsed: "stability-ai/sdxl",
+        resolution: "3:4",
+        modelUsed: "mayaman/maya-29",
       });
 
       res.json({
