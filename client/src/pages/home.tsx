@@ -295,8 +295,8 @@ export default function Home() {
 
 
 
-      {/* Fixed Lenovo Logo */}
-      <div className="fixed bottom-4 left-4 z-50">
+      {/* Fixed Lenovo Logo - Aligned with Reset Button */}
+      <div className="fixed bottom-[140px] left-4 z-50">
         <div className="tech-border silver-glow p-2 bg-card/20 backdrop-blur-sm">
           <svg 
             width="100" 
