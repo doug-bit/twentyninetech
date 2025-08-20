@@ -118,10 +118,10 @@ export default function Home() {
     <div className="h-screen flex flex-col bg-background relative overflow-hidden">
       {/* Main Content - Maximized Layout */}
       <main className="flex-1 p-6 flex flex-col">
-        <div className="max-w-6xl mx-auto flex-1 flex flex-col gap-4">
+        <div className="max-w-7xl mx-auto flex-1 flex flex-col gap-3">
           
-          {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) - Optimized */}
-          <div className="w-full max-w-[72rem] mx-auto aspect-[3/4] relative">
+          {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) - Enlarged */}
+          <div className="w-full max-w-[80rem] mx-auto aspect-[3/4] relative">
             <div className="w-full h-full relative">
               {/* Base preview area - always visible */}
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border border-dashed">
@@ -214,7 +214,7 @@ export default function Home() {
           </div>
 
           {/* Sleek Prompt Input - Scaled Up */}
-          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm max-w-[72rem] mx-auto w-full">
+          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm max-w-[80rem] mx-auto w-full">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
                 <FormField
