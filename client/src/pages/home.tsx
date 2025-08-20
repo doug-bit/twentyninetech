@@ -62,7 +62,7 @@ export default function Home() {
           description: "Your image has been generated and downloaded.",
         });
         
-        form.reset();
+        // Keep form content - don't reset to stay on main screen
       }
     },
     onError: (error) => {
@@ -277,9 +277,19 @@ export default function Home() {
             </div>
           )}
 
-          {/* Generation Complete Cue */}
+          {/* Image Actions */}
           {currentImage && !isGenerating && (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center gap-3">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setCurrentImage(null);
+                  // Don't reset form - keep the prompt for easy iteration
+                }}
+                className="bg-card/30 border-border/50 text-accent/70 hover:text-foreground hover:bg-card/50 font-mono text-xs tracking-[0.15em] transition-all duration-500 h-8 px-4 font-light lowercase"
+              >
+                generate new
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => {
