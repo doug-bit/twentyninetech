@@ -57,7 +57,7 @@ function generateFilename(prompt: string): string {
     .replace(/[^a-z0-9\s]/g, '')
     .replace(/\s+/g, '-')
     .substring(0, 50);
-  return `${timestamp}_${sanitizedPrompt}.png`;
+  return `${timestamp}_${sanitizedPrompt}.webp`;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -71,24 +71,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { prompt } = generateImageRequestSchema.parse(req.body);
 
-      // Call Replicate API with actual Maya-29 model
+      // Call Replicate API with actual Maya-29 model - using exact schema parameters
       const output = await replicate.run(
         "mayaman/maya-29:38b7e8b65127f9e6a0c037fce3b86272718e1a423d80ea23c89311d180422b4c",
         {
           input: {
-            model: "dev",
             prompt: prompt,
-            go_fast: false,
-            lora_scale: 1,
-            megapixels: "1",
-            num_outputs: 1,
             aspect_ratio: "3:4", // 3:4 aspect ratio for LED wall display
-            output_format: "png",
+            model: "dev",
+            num_outputs: 1,
+            num_inference_steps: 28,
             guidance_scale: 3,
-            output_quality: 90,
+            output_format: "webp", // Default format as per schema
+            output_quality: 90, // High quality for LED display
             prompt_strength: 0.8,
+            go_fast: false,
+            megapixels: "1",
+            lora_scale: 1,
             extra_lora_scale: 1,
-            num_inference_steps: 28
+            disable_safety_checker: false
           }
         }
       );
@@ -178,9 +179,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await fs.access(imagePath);
       
       // Extract prompt from filename for better download name
-      const promptMatch = filename.match(/^\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z_(.+)\.png$/);
+      const promptMatch = filename.match(/^[\d-T]+Z_(.+)\.(webp|png)$/);
       const promptPart = promptMatch ? promptMatch[1] : 'generated-image';
-      const downloadFilename = `MM29-${promptPart}.png`;
+      const fileExt = promptMatch ? promptMatch[2] : 'webp';
+      const downloadFilename = `MM29-${promptPart}.${fileExt}`;
       
       // Force download with proper headers
       res.setHeader('Content-Type', 'application/octet-stream');
@@ -214,8 +216,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
         res.setHeader('Cache-Control', 'no-cache');
       } else {
-        // Set headers for viewing
-        res.setHeader('Content-Type', 'image/png');
+        // Set headers for viewing based on file extension
+        const isWebp = filename.endsWith('.webp');
+        res.setHeader('Content-Type', isWebp ? 'image/webp' : 'image/png');
         res.setHeader('Cache-Control', 'public, max-age=31536000');
       }
       
