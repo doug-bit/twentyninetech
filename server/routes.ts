@@ -68,28 +68,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { prompt } = generateImageRequestSchema.parse(req.body);
 
-      // Call Replicate API with Maya-29 model
+      // Call Replicate API with Flux Schnell model (fast, high-quality)
       const output = await replicate.run(
-        "mayaman/maya-29",
+        "black-forest-labs/flux-schnell",
         {
           input: {
-            prompt: `MM29 ${prompt}`, // Include trigger word for Maya model
+            prompt: `${prompt}, futuristic streetwear, high tech fashion, minimalist design, professional photography`,
             aspect_ratio: "3:4", // 3:4 aspect ratio for post feed format
             num_outputs: 1,
-            num_inference_steps: 28,
-            guidance_scale: 3.5,
-            model: "dev",
             output_format: "png",
             output_quality: 90
           }
         }
-      ) as string[];
+      );
 
-      if (!output || output.length === 0) {
-        throw new Error("No image generated from API");
+      console.log("Replicate output:", JSON.stringify(output, null, 2));
+
+      // Handle different output formats from Replicate
+      let imageUrl: string;
+      if (Array.isArray(output) && output.length > 0) {
+        imageUrl = output[0];
+      } else if (typeof output === 'string') {
+        imageUrl = output;
+      } else {
+        console.error("Unexpected output format:", output);
+        throw new Error("No valid image URL in API response");
       }
-
-      const imageUrl = output[0];
       const filename = generateFilename(prompt);
       
       // Download and save image locally
@@ -98,15 +102,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get file stats for size
       const stats = await fs.stat(localPath);
       
-      // Save to storage
+      // Save to storage with local URL for frontend
+      const localUrl = `/api/images/${filename}`;
+      console.log("Saving image with localUrl:", localUrl);
+      
       const savedImage = await storage.saveGeneratedImage({
         prompt,
-        imageUrl,
+        imageUrl: localUrl, // Use local URL instead of external
         localPath,
         fileSize: stats.size,
         resolution: "3:4",
-        modelUsed: "mayaman/maya-29",
+        modelUsed: "black-forest-labs/flux-schnell",
       });
+
+      console.log("Saved image data:", JSON.stringify(savedImage, null, 2));
 
       res.json({
         success: true,
@@ -137,35 +146,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get image count
+  // Get image count (must come before the generic image serving route)
   app.get("/api/images/count", async (req, res) => {
     try {
       const count = await storage.getImageCount();
       res.json({ count });
     } catch (error) {
-      console.error("Error fetching image count:", error);
-      res.status(500).json({
-        message: "Failed to fetch image count"
-      });
+      console.error("Error getting image count:", error);
+      res.status(500).json({ message: "Failed to get image count" });
     }
   });
 
   // Serve generated images
-  app.get("/api/images/:id", async (req, res) => {
+  app.get("/api/images/:filename", async (req, res) => {
     try {
-      const image = await storage.getImageById(req.params.id);
-      if (!image) {
-        return res.status(404).json({ message: "Image not found" });
-      }
+      const filename = req.params.filename;
+      const imagePath = path.join(IMAGES_DIR, filename);
       
-      res.sendFile(path.resolve(image.localPath));
+      // Check if file exists
+      await fs.access(imagePath);
+      
+      // Set appropriate headers
+      res.setHeader('Content-Type', 'image/png');
+      res.setHeader('Cache-Control', 'public, max-age=31536000');
+      
+      // Send the file
+      res.sendFile(path.resolve(imagePath));
     } catch (error) {
       console.error("Error serving image:", error);
-      res.status(500).json({
-        message: "Failed to serve image"
-      });
+      res.status(404).json({ message: "Image not found" });
     }
   });
+
+
 
   const httpServer = createServer(app);
   return httpServer;

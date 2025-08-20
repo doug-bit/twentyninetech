@@ -184,7 +184,7 @@ export default function Home() {
               {currentImage && showImageResult && (
                 <div className="absolute inset-0 overflow-hidden border border-border">
                   <img 
-                    src={`/api/images/${currentImage.id}`}
+                    src={currentImage.imageUrl}
                     alt={`Generated image: ${currentImage.prompt}`}
                     className="w-full h-full object-cover"
                   />
