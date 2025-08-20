@@ -101,7 +101,7 @@ export default function Home() {
   const isGenerating = generateMutation.isPending;
 
   return (
-    <div className="min-h-screen flex flex-col bg-surface">
+    <div className="min-h-screen flex flex-col bg-surface relative">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-4 py-6">
         <div className="max-w-4xl mx-auto">
@@ -341,6 +341,29 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Fixed Lenovo Logo */}
+      <div className="fixed bottom-4 left-4 z-50">
+        <svg 
+          width="120" 
+          height="40" 
+          viewBox="0 0 120 40" 
+          className="opacity-80 hover:opacity-100 transition-opacity"
+        >
+          <rect width="120" height="40" fill="#E4002B" rx="4"/>
+          <text 
+            x="60" 
+            y="28" 
+            textAnchor="middle" 
+            fill="white" 
+            fontSize="18" 
+            fontWeight="bold" 
+            fontFamily="Arial, sans-serif"
+          >
+            lenovo
+          </text>
+        </svg>
+      </div>
     </div>
   );
 }
