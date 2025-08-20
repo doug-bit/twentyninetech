@@ -88,16 +88,44 @@ export default function Home() {
 
 
 
-  const downloadImageToComputer = (imageUrl: string, prompt: string) => {
-    const link = document.createElement('a');
-    // Add download parameter to force download headers
-    const downloadUrl = imageUrl.includes('?') ? `${imageUrl}&download=true` : `${imageUrl}?download=true`;
-    const fullUrl = downloadUrl.startsWith('http') ? downloadUrl : `${window.location.origin}${BASE_PATH}${downloadUrl}`;
-    link.href = fullUrl;
-    link.download = `MM29-${prompt.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const downloadImageToComputer = async (imageUrl: string, prompt: string) => {
+    try {
+      // Add download parameter to force download headers
+      const downloadUrl = imageUrl.includes('?') ? `${imageUrl}&download=true` : `${imageUrl}?download=true`;
+      const fullUrl = downloadUrl.startsWith('http') ? downloadUrl : `${window.location.origin}${BASE_PATH}${downloadUrl}`;
+      
+      // Fetch the image as blob
+      const response = await fetch(fullUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to download: ${response.statusText}`);
+      }
+      
+      const blob = await response.blob();
+      
+      // Create blob URL and download
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `MM29-${prompt.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up blob URL
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      
+      toast({
+        title: "Download Started",
+        description: "Image is being downloaded to your computer.",
+      });
+    } catch (error) {
+      console.error('Download failed:', error);
+      toast({
+        title: "Download Failed",
+        description: "Could not download the image. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleDownload = () => {
