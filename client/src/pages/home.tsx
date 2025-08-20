@@ -200,8 +200,37 @@ export default function Home() {
               ) : (
                 // Empty State
                 <div className="aspect-square bg-gray-50 flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
-                  <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
-                    <Image className="h-8 w-8 text-gray-400" />
+                  <div className="w-20 h-20 flex items-center justify-center mb-4">
+                    <svg 
+                      width="80" 
+                      height="80" 
+                      viewBox="0 0 80 80" 
+                      className="opacity-60"
+                    >
+                      <rect width="80" height="80" fill="#000000" rx="8"/>
+                      <text 
+                        x="40" 
+                        y="32" 
+                        textAnchor="middle" 
+                        fill="white" 
+                        fontSize="12" 
+                        fontWeight="bold" 
+                        fontFamily="Arial, sans-serif"
+                      >
+                        HYPE
+                      </text>
+                      <text 
+                        x="40" 
+                        y="48" 
+                        textAnchor="middle" 
+                        fill="white" 
+                        fontSize="12" 
+                        fontWeight="bold" 
+                        fontFamily="Arial, sans-serif"
+                      >
+                        BEAST
+                      </text>
+                    </svg>
                   </div>
                 </div>
               )}
