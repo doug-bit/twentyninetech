@@ -160,6 +160,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Download endpoint - forces download with proper filename
+  app.get(`${basePath}/api/download/:filename`, async (req, res) => {
+    try {
+      const filename = req.params.filename;
+      const imagePath = path.join(IMAGES_DIR, filename);
+      
+      // Check if file exists
+      await fs.access(imagePath);
+      
+      // Extract prompt from filename for better download name
+      const promptMatch = filename.match(/^\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z_(.+)\.png$/);
+      const promptPart = promptMatch ? promptMatch[1] : 'generated-image';
+      const downloadFilename = `MM29-${promptPart}.png`;
+      
+      // Force download with proper headers
+      res.setHeader('Content-Type', 'application/octet-stream');
+      res.setHeader('Content-Disposition', `attachment; filename="${downloadFilename}"`);
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Content-Transfer-Encoding', 'binary');
+      
+      // Send the file
+      res.sendFile(path.resolve(imagePath));
+    } catch (error) {
+      console.error("Error downloading image:", error);
+      res.status(404).json({ message: "Image not found" });
+    }
+  });
+
   // Serve generated images
   app.get(`${basePath}/api/images/:filename`, async (req, res) => {
     try {

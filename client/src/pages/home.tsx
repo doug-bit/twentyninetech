@@ -88,31 +88,19 @@ export default function Home() {
 
 
 
-  const downloadImageToComputer = async (imageUrl: string, prompt: string) => {
+  const downloadImageToComputer = (imageUrl: string, prompt: string) => {
     try {
-      // Add download parameter to force download headers
-      const downloadUrl = imageUrl.includes('?') ? `${imageUrl}&download=true` : `${imageUrl}?download=true`;
-      const fullUrl = downloadUrl.startsWith('http') ? downloadUrl : `${window.location.origin}${BASE_PATH}${downloadUrl}`;
-      
-      // Fetch the image as blob
-      const response = await fetch(fullUrl);
-      if (!response.ok) {
-        throw new Error(`Failed to download: ${response.statusText}`);
+      // Extract filename from imageUrl
+      const filename = imageUrl.split('/').pop();
+      if (!filename) {
+        throw new Error('Invalid image URL');
       }
       
-      const blob = await response.blob();
+      // Use dedicated download endpoint
+      const downloadUrl = `${window.location.origin}${BASE_PATH}/api/download/${filename}`;
       
-      // Create blob URL and download
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `MM29-${prompt.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Clean up blob URL
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      // Simple direct download approach
+      window.open(downloadUrl, '_blank');
       
       toast({
         title: "Download Started",
