@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Wand2, Download, Share2, Folder, Image, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Wand2, Download, Share2, Folder, Image, CheckCircle, AlertCircle, Loader2, Home as HomeIcon } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { generateImageRequestSchema, type GeneratedImage, type GenerateImageRequest } from "@shared/schema";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,9 @@ export default function Home() {
   });
 
   const promptValue = form.watch("prompt");
+  
+  // Calculate word count
+  const wordCount = promptValue ? promptValue.trim().split(/\s+/).filter(word => word.length > 0).length : 0;
 
   // Fetch recent images
   const { data: recentImages = [] } = useQuery<GeneratedImage[]>({
@@ -200,20 +203,22 @@ export default function Home() {
             )}
           </div>
 
-          {/* Search Bar Style Prompt Input */}
+          {/* Enhanced Prompt Input with Word Count */}
           <div className="tech-border silver-glow">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-3 p-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 space-y-3">
                 <FormField
                   control={form.control}
                   name="prompt"
                   render={({ field }) => (
-                    <FormItem className="flex-1">
+                    <FormItem>
                       <FormControl>
-                        <input
+                        <Textarea
                           {...field}
-                          className="w-full h-12 px-4 bg-input border border-border focus:border-primary focus:ring-1 focus:ring-primary/50 text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300 outline-none"
+                          rows={3}
+                          className="w-full px-4 py-3 bg-input border border-border focus:border-primary focus:ring-1 focus:ring-primary/50 text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300 resize-none"
                           placeholder="DESCRIBE YOUR VISION..."
+                          maxLength={400}
                         />
                       </FormControl>
                       <FormMessage />
@@ -221,20 +226,73 @@ export default function Home() {
                   )}
                 />
                 
-                <Button 
-                  type="submit" 
-                  disabled={isGenerating || !promptValue.trim()}
-                  className="bg-primary hover:bg-primary/80 text-primary-foreground px-6 h-12 font-mono font-bold text-xs tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
-                >
-                  {isGenerating ? (
-                    <Loader2 className="animate-spin h-4 w-4" />
-                  ) : (
-                    <Wand2 className="h-4 w-4" />
-                  )}
-                </Button>
+                <div className="flex items-center justify-between">
+                  <div className="text-xs font-mono text-muted-foreground cyber-text">
+                    {wordCount}/60 WORDS
+                    {wordCount > 60 && (
+                      <span className="text-primary ml-2">LIMIT EXCEEDED</span>
+                    )}
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    disabled={isGenerating || !promptValue.trim() || wordCount > 60}
+                    className="bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-3 font-mono font-bold text-xs tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
+                  >
+                    {isGenerating ? (
+                      <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                    ) : (
+                      <Wand2 className="h-4 w-4 mr-2" />
+                    )}
+                    <span>{isGenerating ? "PROCESSING..." : "GENERATE"}</span>
+                  </Button>
+                </div>
               </form>
             </Form>
           </div>
+
+          {/* Image Carousel */}
+          {recentImages.length > 0 && (
+            <div className="relative h-24 overflow-hidden">
+              <div className="flex space-x-4 animate-scroll">
+                {recentImages.map((image, index) => (
+                  <div
+                    key={image.id}
+                    className="flex-shrink-0 w-24 h-24 relative"
+                    style={{
+                      filter: `blur(${Math.min(index * 0.5, 3)}px)`,
+                      opacity: Math.max(1 - index * 0.1, 0.2),
+                    }}
+                  >
+                    <img
+                      src={`/api/images/${image.id}`}
+                      alt=""
+                      className="w-full h-full object-cover tech-border cursor-pointer hover:filter-none transition-all duration-300"
+                      onClick={() => setCurrentImage(image)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+            </div>
+          )}
+
+          {/* Generation Complete Cue */}
+          {currentImage && !isGenerating && (
+            <div className="flex items-center justify-center mt-4">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setCurrentImage(null);
+                  form.reset();
+                }}
+                className="bg-card/50 border-border text-muted-foreground hover:text-foreground font-mono text-xs tracking-wider transition-all duration-300"
+              >
+                <HomeIcon className="h-3 w-3 mr-2" />
+                RETURN TO START
+              </Button>
+            </div>
+          )}
 
         </div>
       </main>
