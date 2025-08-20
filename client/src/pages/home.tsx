@@ -108,62 +108,17 @@ export default function Home() {
   const isGenerating = generateMutation.isPending;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background relative">
-      {/* Main Content */}
-      <main className="flex-1 px-6 py-12">
-        <div className="max-w-4xl mx-auto space-y-12">
+    <div className="h-screen flex flex-col bg-background relative overflow-hidden">
+      {/* Main Content - Single Page Layout */}
+      <main className="flex-1 p-4 flex flex-col">
+        <div className="max-w-5xl mx-auto flex-1 flex flex-col gap-4">
           
-          {/* Prompt Input */}
-          <Card className="bg-card tech-border silver-glow">
-            <CardContent className="p-8">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="prompt"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <div className="relative">
-                            <Textarea
-                              {...field}
-                              rows={4}
-                              className="w-full px-6 py-4 bg-input border border-border focus:border-primary focus:ring-2 focus:ring-primary/50 resize-none text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300"
-                              placeholder="DESCRIBE YOUR VISION..."
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <div className="flex items-center justify-end">
-                    <Button 
-                      type="submit" 
-                      disabled={isGenerating || !promptValue.trim()}
-                      className="bg-primary hover:bg-primary/80 text-primary-foreground px-8 py-4 font-mono font-bold text-sm tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
-                    >
-                      {isGenerating ? (
-                        <Loader2 className="animate-spin mr-2" />
-                      ) : (
-                        <Wand2 className="mr-2" />
-                      )}
-                      <span>{isGenerating ? "PROCESSING..." : "GENERATE"}</span>
-                    </Button>
-                  </div>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-
-          {/* Image Display */}
-          <Card className="bg-card tech-border overflow-hidden">
-            {/* Image Container */}
-            <div className="relative">
+          {/* Image Display - Top Section (60% height) */}
+          <Card className="bg-card tech-border overflow-hidden flex-[3]">
+            <div className="relative h-full">
               {isGenerating ? (
                 // Loading State
-                <div className="aspect-square bg-muted flex flex-col items-center justify-center">
+                <div className="h-full bg-muted flex flex-col items-center justify-center">
                   <div className="flex space-x-3 mb-8">
                     <div className="w-4 h-4 bg-primary animate-pulse"></div>
                     <div className="w-4 h-4 bg-accent animate-pulse" style={{ animationDelay: '0.3s' }}></div>
@@ -178,22 +133,22 @@ export default function Home() {
                 </div>
               ) : currentImage ? (
                 // Generated Image Display
-                <div className="aspect-square relative tech-glow">
+                <div className="h-full relative tech-glow">
                   <img 
                     src={`/api/images/${currentImage.id}`}
                     alt={`Generated image: ${currentImage.prompt}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                   
                   {/* Image Actions Overlay */}
-                  <div className="absolute top-6 right-6 flex space-x-3">
+                  <div className="absolute top-4 right-4 flex space-x-2">
                     <Button 
                       size="sm"
                       variant="secondary"
                       className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm tech-border"
                       onClick={handleDownload}
                     >
-                      <Download className="h-4 w-4" />
+                      <Download className="h-3 w-3" />
                     </Button>
                     <Button 
                       size="sm"
@@ -201,27 +156,27 @@ export default function Home() {
                       className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm tech-border"
                       onClick={handleShare}
                     >
-                      <Share2 className="h-4 w-4" />
+                      <Share2 className="h-3 w-3" />
                     </Button>
                   </div>
                 </div>
               ) : (
                 // Empty State
-                <div className="aspect-square bg-muted flex flex-col items-center justify-center border-2 border-dashed border-border">
-                  <div className="w-24 h-24 flex items-center justify-center mb-6">
+                <div className="h-full bg-muted flex flex-col items-center justify-center border-2 border-dashed border-border">
+                  <div className="w-20 h-20 flex items-center justify-center">
                     <svg 
-                      width="96" 
-                      height="96" 
-                      viewBox="0 0 96 96" 
+                      width="80" 
+                      height="80" 
+                      viewBox="0 0 80 80" 
                       className="opacity-70"
                     >
-                      <rect width="96" height="96" fill="#000000" rx="4"/>
+                      <rect width="80" height="80" fill="#000000" rx="4"/>
                       <text 
-                        x="48" 
-                        y="38" 
+                        x="40" 
+                        y="32" 
                         textAnchor="middle" 
                         fill="white" 
-                        fontSize="14" 
+                        fontSize="12" 
                         fontWeight="bold" 
                         fontFamily="JetBrains Mono, monospace"
                         letterSpacing="0.1em"
@@ -229,11 +184,11 @@ export default function Home() {
                         HYPE
                       </text>
                       <text 
-                        x="48" 
-                        y="58" 
+                        x="40" 
+                        y="52" 
                         textAnchor="middle" 
                         fill="white" 
-                        fontSize="14" 
+                        fontSize="12" 
                         fontWeight="bold" 
                         fontFamily="JetBrains Mono, monospace"
                         letterSpacing="0.1em"
@@ -245,11 +200,49 @@ export default function Home() {
                 </div>
               )}
             </div>
-
-
           </Card>
 
-
+          {/* Prompt Input - Bottom Section (40% height) */}
+          <Card className="bg-card tech-border silver-glow flex-[2]">
+            <CardContent className="p-6 h-full">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="h-full flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="prompt"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            rows={3}
+                            className="w-full h-full resize-none px-4 py-3 bg-input border border-border focus:border-primary focus:ring-2 focus:ring-primary/50 text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300"
+                            placeholder="DESCRIBE YOUR VISION..."
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <div className="flex items-center justify-end">
+                    <Button 
+                      type="submit" 
+                      disabled={isGenerating || !promptValue.trim()}
+                      className="bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-3 font-mono font-bold text-sm tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
+                    >
+                      {isGenerating ? (
+                        <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                      ) : (
+                        <Wand2 className="mr-2 h-4 w-4" />
+                      )}
+                      <span>{isGenerating ? "PROCESSING..." : "GENERATE"}</span>
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
 
         </div>
       </main>
