@@ -113,11 +113,11 @@ export default function Home() {
   return (
     <div className="h-screen flex flex-col bg-background relative overflow-hidden">
       {/* Main Content - Maximized Layout */}
-      <main className="flex-1 p-3 flex flex-col">
-        <div className="max-w-5xl mx-auto flex-1 flex flex-col gap-3">
+      <main className="flex-1 p-6 flex flex-col">
+        <div className="max-w-6xl mx-auto flex-1 flex flex-col gap-4">
           
           {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) */}
-          <div className="w-full max-w-3xl mx-auto aspect-[3/4] relative">
+          <div className="w-full max-w-4xl mx-auto aspect-[3/4] relative">
             {isGenerating ? (
               // Loading State
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border">
@@ -203,10 +203,10 @@ export default function Home() {
             )}
           </div>
 
-          {/* Sleek Prompt Input */}
-          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm">
+          {/* Sleek Prompt Input - Scaled Up */}
+          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm max-w-4xl mx-auto w-full">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 space-y-3">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
                 <FormField
                   control={form.control}
                   name="prompt"
@@ -215,8 +215,8 @@ export default function Home() {
                       <FormControl>
                         <Textarea
                           {...field}
-                          rows={2}
-                          className="w-full px-4 py-3 bg-input/50 border-0 focus:bg-input/80 text-foreground placeholder-accent/60 font-mono text-sm transition-all duration-500 resize-none tracking-wide leading-relaxed"
+                          rows={3}
+                          className="w-full px-6 py-4 bg-input/50 border-0 focus:bg-input/80 text-black dark:text-white placeholder-accent/60 font-mono text-base transition-all duration-500 resize-none tracking-wide leading-relaxed font-medium"
                           placeholder="describe your vision"
                           maxLength={400}
                         />
@@ -227,7 +227,7 @@ export default function Home() {
                 />
                 
                 <div className="flex items-center justify-between">
-                  <div className="text-xs font-mono text-accent/70 tracking-[0.2em] font-light">
+                  <div className="text-sm font-mono text-accent/70 tracking-[0.2em] font-light">
                     {wordCount}/60
                     {wordCount > 60 && (
                       <span className="text-primary/80 ml-3 font-medium">limit exceeded</span>
@@ -237,12 +237,12 @@ export default function Home() {
                   <Button 
                     type="submit" 
                     disabled={isGenerating || !promptValue.trim() || wordCount > 60}
-                    className="bg-primary/90 hover:bg-primary text-primary-foreground px-6 py-2.5 font-mono font-medium text-xs tracking-[0.15em] transition-all duration-500 tech-glow disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="bg-primary/90 hover:bg-primary text-primary-foreground px-8 py-3 font-mono font-medium text-sm tracking-[0.15em] transition-all duration-500 tech-glow disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {isGenerating ? (
-                      <Loader2 className="animate-spin h-3 w-3 mr-2" />
+                      <Loader2 className="animate-spin h-4 w-4 mr-2" />
                     ) : (
-                      <Wand2 className="h-3 w-3 mr-2" />
+                      <Wand2 className="h-4 w-4 mr-2" />
                     )}
                     <span className="lowercase">{isGenerating ? "processing" : "generate"}</span>
                   </Button>
