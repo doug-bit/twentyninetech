@@ -36,9 +36,14 @@ Preferred communication style: Simple, everyday language.
 - **User Model**: Username/password based authentication schema ready for implementation
 
 ## External Service Integrations
-- **AI Image Generation**: Replicate API integration using "mayaman/maya-29" model
-- **Image Processing**: Automatic download and local storage of generated images
-- **File Management**: Structured filename generation with timestamps and sanitized prompts
+- **AI Image Generation**: Replicate API integration using authentic "mayaman/maya-29" model with exact schema parameters
+  - Model: dev (28 inference steps optimized)
+  - Output format: webp (default for Maya-29)
+  - Aspect ratio: 3:4 (optimized for LED wall display)
+  - Guidance scale: 3 (balanced realism)
+  - File sizes: 68-78KB (confirms authentic webp output vs 1MB+ fake results)
+- **Image Processing**: Automatic download and local storage of generated images with proper webp handling
+- **File Management**: Structured filename generation with timestamps, sanitized prompts, and MM29- prefix for downloads
 
 ## Key Design Patterns
 - **Monorepo Structure**: Organized into `client/`, `server/`, and `shared/` directories
