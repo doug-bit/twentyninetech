@@ -33,7 +33,18 @@ async function downloadImage(url: string, filename: string): Promise<string> {
   const fileStream = createWriteStream(filePath);
   
   if (response.body) {
-    await pipeline(response.body, fileStream);
+    const reader = response.body.getReader();
+    const writer = fileStream;
+    
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        writer.write(value);
+      }
+    } finally {
+      writer.end();
+    }
   }
   
   return filePath;
