@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Wand2, Download, Share2, Folder, Image, CheckCircle, AlertCircle, Loader2, Home as HomeIcon } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { generateImageRequestSchema, type GeneratedImage, type GenerateImageRequest } from "@shared/schema";
+import { BASE_PATH } from "@/config";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -89,7 +90,10 @@ export default function Home() {
 
   const downloadImageToComputer = (imageUrl: string, prompt: string) => {
     const link = document.createElement('a');
-    link.href = imageUrl;
+    // Add download parameter to force download headers
+    const downloadUrl = imageUrl.includes('?') ? `${imageUrl}&download=true` : `${imageUrl}?download=true`;
+    const fullUrl = downloadUrl.startsWith('http') ? downloadUrl : `${window.location.origin}${BASE_PATH}${downloadUrl}`;
+    link.href = fullUrl;
     link.download = `MM29-${prompt.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.png`;
     document.body.appendChild(link);
     link.click();

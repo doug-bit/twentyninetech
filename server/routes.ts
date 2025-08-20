@@ -169,9 +169,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check if file exists
       await fs.access(imagePath);
       
-      // Set appropriate headers
-      res.setHeader('Content-Type', 'image/png');
-      res.setHeader('Cache-Control', 'public, max-age=31536000');
+      // Check if this is a download request
+      const isDownload = req.query.download === 'true';
+      
+      if (isDownload) {
+        // Set headers for download
+        res.setHeader('Content-Type', 'application/octet-stream');
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.setHeader('Cache-Control', 'no-cache');
+      } else {
+        // Set headers for viewing
+        res.setHeader('Content-Type', 'image/png');
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+      }
       
       // Send the file
       res.sendFile(path.resolve(imagePath));
