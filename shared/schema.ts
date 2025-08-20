@@ -16,7 +16,7 @@ export const generatedImages = pgTable("generated_images", {
   localPath: text("local_path").notNull(),
   fileSize: integer("file_size").notNull(),
   resolution: text("resolution").notNull(),
-  modelUsed: text("model_used").notNull().default("bytedance/sdxl-lightning-4step"),
+  modelUsed: text("model_used").notNull().default("mayaman/maya-29"),
   generatedAt: timestamp("generated_at").defaultNow().notNull(),
 });
 

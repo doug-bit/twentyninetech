@@ -44,7 +44,7 @@ export class MemStorage implements IStorage {
     const image: GeneratedImage = {
       ...insertImage,
       id,
-      modelUsed: insertImage.modelUsed || "bytedance/sdxl-lightning-4step",
+      modelUsed: insertImage.modelUsed || "mayaman/maya-29",
       generatedAt: new Date(),
     };
     this.images.set(id, image);

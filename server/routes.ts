@@ -68,17 +68,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { prompt } = generateImageRequestSchema.parse(req.body);
 
-      // Call Replicate API with SDXL Lightning model
+      // Call Replicate API with Maya-29 model
       const output = await replicate.run(
-        "bytedance/sdxl-lightning-4step",
+        "mayaman/maya-29",
         {
           input: {
             prompt: prompt,
             width: 1024,
             height: 1024,
             num_outputs: 1,
-            num_inference_steps: 4,
-            guidance_scale: 0
+            num_inference_steps: 28,
+            guidance_scale: 3.5,
+            scheduler: "K_EULER"
           }
         }
       ) as string[];
@@ -103,7 +104,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         localPath,
         fileSize: stats.size,
         resolution: "1024x1024",
-        modelUsed: "bytedance/sdxl-lightning-4step",
+        modelUsed: "mayaman/maya-29",
       });
 
       res.json({
