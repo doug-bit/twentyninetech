@@ -112,12 +112,12 @@ export default function Home() {
 
   return (
     <div className="h-screen flex flex-col bg-background relative overflow-hidden">
-      {/* Main Content - Optimized Layout */}
-      <main className="flex-1 p-4 flex flex-col">
-        <div className="max-w-3xl mx-auto flex-1 flex flex-col gap-4">
+      {/* Main Content - Maximized Layout */}
+      <main className="flex-1 p-3 flex flex-col">
+        <div className="max-w-5xl mx-auto flex-1 flex flex-col gap-3">
           
-          {/* Image Display - LED Wall Portrait Aspect Ratio (4:3) */}
-          <div className="w-full aspect-[4/3] relative">
+          {/* Image Display - LED Wall Portrait Aspect Ratio (4:3) - Larger */}
+          <div className="w-full aspect-[4/3] relative flex-1 min-h-0">
             {isGenerating ? (
               // Loading State
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border">
@@ -129,7 +129,7 @@ export default function Home() {
                 <div className="w-48 bg-border h-0.5 overflow-hidden">
                   <div className="bg-gradient-to-r from-primary to-accent h-full animate-pulse transition-all duration-1000" style={{ width: '60%' }}></div>
                 </div>
-                <div className="mt-3 text-muted-foreground cyber-text text-xs tracking-widest">
+                <div className="mt-3 text-accent/80 font-mono text-xs tracking-[0.3em] font-light">
                   PROCESSING
                 </div>
               </div>
@@ -203,10 +203,10 @@ export default function Home() {
             )}
           </div>
 
-          {/* Compact Prompt Input with Word Count */}
-          <div className="tech-border silver-glow">
+          {/* Sleek Prompt Input */}
+          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="p-3 space-y-2">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 space-y-3">
                 <FormField
                   control={form.control}
                   name="prompt"
@@ -216,8 +216,8 @@ export default function Home() {
                         <Textarea
                           {...field}
                           rows={2}
-                          className="w-full px-3 py-2 bg-input border border-border focus:border-primary focus:ring-1 focus:ring-primary/50 text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300 resize-none"
-                          placeholder="DESCRIBE YOUR VISION..."
+                          className="w-full px-4 py-3 bg-input/50 border-0 focus:bg-input/80 text-foreground placeholder-accent/60 font-mono text-sm transition-all duration-500 resize-none tracking-wide leading-relaxed"
+                          placeholder="describe your vision"
                           maxLength={400}
                         />
                       </FormControl>
@@ -227,24 +227,24 @@ export default function Home() {
                 />
                 
                 <div className="flex items-center justify-between">
-                  <div className="text-xs font-mono text-muted-foreground cyber-text">
-                    {wordCount}/60 WORDS
+                  <div className="text-xs font-mono text-accent/70 tracking-[0.2em] font-light">
+                    {wordCount}/60
                     {wordCount > 60 && (
-                      <span className="text-primary ml-2">LIMIT EXCEEDED</span>
+                      <span className="text-primary/80 ml-3 font-medium">limit exceeded</span>
                     )}
                   </div>
                   
                   <Button 
                     type="submit" 
                     disabled={isGenerating || !promptValue.trim() || wordCount > 60}
-                    className="bg-primary hover:bg-primary/80 text-primary-foreground px-4 py-2 font-mono font-bold text-xs tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
+                    className="bg-primary/90 hover:bg-primary text-primary-foreground px-6 py-2.5 font-mono font-medium text-xs tracking-[0.15em] transition-all duration-500 tech-glow disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {isGenerating ? (
                       <Loader2 className="animate-spin h-3 w-3 mr-2" />
                     ) : (
                       <Wand2 className="h-3 w-3 mr-2" />
                     )}
-                    <span>{isGenerating ? "PROCESSING..." : "GENERATE"}</span>
+                    <span className="lowercase">{isGenerating ? "processing" : "generate"}</span>
                   </Button>
                 </div>
               </form>
@@ -286,10 +286,10 @@ export default function Home() {
                   setCurrentImage(null);
                   form.reset();
                 }}
-                className="bg-card/50 border-border text-muted-foreground hover:text-foreground font-mono text-xs tracking-wider transition-all duration-300 h-8"
+                className="bg-card/30 border-border/50 text-accent/70 hover:text-foreground hover:bg-card/50 font-mono text-xs tracking-[0.15em] transition-all duration-500 h-8 px-4 font-light lowercase"
               >
-                <HomeIcon className="h-3 w-3 mr-1" />
-                RETURN TO START
+                <HomeIcon className="h-3 w-3 mr-2" />
+                start over
               </Button>
             </div>
           )}
@@ -300,24 +300,24 @@ export default function Home() {
 
 
       {/* Fixed Lenovo Logo */}
-      <div className="fixed bottom-6 left-6 z-50">
-        <div className="tech-border silver-glow p-3">
+      <div className="fixed bottom-4 left-4 z-50">
+        <div className="tech-border silver-glow p-2 bg-card/20 backdrop-blur-sm">
           <svg 
-            width="120" 
-            height="40" 
-            viewBox="0 0 120 40" 
-            className="opacity-90 hover:opacity-100 transition-opacity"
+            width="100" 
+            height="32" 
+            viewBox="0 0 100 32" 
+            className="opacity-80 hover:opacity-100 transition-all duration-500"
           >
-            <rect width="120" height="40" fill="#E4002B" rx="2"/>
+            <rect width="100" height="32" fill="#E4002B" rx="1"/>
             <text 
-              x="60" 
-              y="28" 
+              x="50" 
+              y="22" 
               textAnchor="middle" 
               fill="white" 
-              fontSize="16" 
-              fontWeight="bold" 
+              fontSize="13" 
+              fontWeight="500" 
               fontFamily="JetBrains Mono, monospace"
-              letterSpacing="0.05em"
+              letterSpacing="0.1em"
             >
               LENOVO
             </text>
