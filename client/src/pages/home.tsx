@@ -15,6 +15,7 @@ export default function Home() {
   const [currentImage, setCurrentImage] = useState<GeneratedImage | null>(null);
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
   const [showImageResult, setShowImageResult] = useState(false);
+  const [resetTimer, setResetTimer] = useState<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
   const form = useForm<GenerateImageRequest>({
@@ -49,7 +50,14 @@ export default function Home() {
         // Show image in preview area only - stays in place
         setShowImageResult(true);
         
-        // Don't reset form - keep prompt visible for next user
+        // Start 10-second auto-reset timer
+        if (resetTimer) clearTimeout(resetTimer);
+        const newTimer = setTimeout(() => {
+          form.reset();
+          setCurrentImage(null);
+          setShowImageResult(false);
+        }, 10000);
+        setResetTimer(newTimer);
         
         // Automatically download the image to user's computer
         downloadImageToComputer(data.image.id, data.image.prompt);
@@ -157,7 +165,7 @@ export default function Home() {
               
               {/* Loading overlay */}
               {isGenerating && (
-                <div className="absolute inset-0 bg-muted/95 flex flex-col items-center justify-center tech-border">
+                <div className="absolute inset-0 bg-muted/95 flex flex-col items-center justify-center border border-border">
                   <div className="flex space-x-2 mb-4">
                     <div className="w-2 h-2 bg-primary animate-pulse"></div>
                     <div className="w-2 h-2 bg-accent animate-pulse" style={{ animationDelay: '0.3s' }}></div>
@@ -172,13 +180,13 @@ export default function Home() {
                 </div>
               )}
               
-              {/* Image overlay - appears on top */}
+              {/* Image overlay - appears on top with exact positioning */}
               {currentImage && showImageResult && (
-                <div className="absolute inset-0 tech-border overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden border border-border">
                   <img 
                     src={`/api/images/${currentImage.id}`}
                     alt={`Generated image: ${currentImage.prompt}`}
-                    className="w-full h-full object-cover bg-card"
+                    className="w-full h-full object-cover"
                   />
                   
                   {/* Image Actions Overlay */}
@@ -260,6 +268,8 @@ export default function Home() {
             <Button 
               type="button"
               onClick={() => {
+                if (resetTimer) clearTimeout(resetTimer);
+                setResetTimer(null);
                 form.reset();
                 setCurrentImage(null);
                 setShowImageResult(false);
