@@ -112,42 +112,42 @@ export default function Home() {
 
   return (
     <div className="h-screen flex flex-col bg-background relative overflow-hidden">
-      {/* Main Content - Single Page Layout */}
-      <main className="flex-1 p-6 flex flex-col">
-        <div className="max-w-4xl mx-auto flex-1 flex flex-col gap-6">
+      {/* Main Content - Optimized Layout */}
+      <main className="flex-1 p-4 flex flex-col">
+        <div className="max-w-3xl mx-auto flex-1 flex flex-col gap-4">
           
-          {/* Image Display - Main Section */}
-          <div className="flex-1 relative">
+          {/* Image Display - LED Wall Portrait Aspect Ratio (4:3) */}
+          <div className="w-full aspect-[4/3] relative">
             {isGenerating ? (
               // Loading State
-              <div className="h-full bg-muted flex flex-col items-center justify-center tech-border">
-                <div className="flex space-x-2 mb-6">
+              <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border">
+                <div className="flex space-x-2 mb-4">
                   <div className="w-2 h-2 bg-primary animate-pulse"></div>
                   <div className="w-2 h-2 bg-accent animate-pulse" style={{ animationDelay: '0.3s' }}></div>
                   <div className="w-2 h-2 bg-primary animate-pulse" style={{ animationDelay: '0.6s' }}></div>
                 </div>
-                <div className="w-64 bg-border h-0.5 overflow-hidden">
+                <div className="w-48 bg-border h-0.5 overflow-hidden">
                   <div className="bg-gradient-to-r from-primary to-accent h-full animate-pulse transition-all duration-1000" style={{ width: '60%' }}></div>
                 </div>
-                <div className="mt-4 text-muted-foreground cyber-text text-xs tracking-widest">
+                <div className="mt-3 text-muted-foreground cyber-text text-xs tracking-widest">
                   PROCESSING
                 </div>
               </div>
             ) : currentImage ? (
               // Generated Image Display
-              <div className="h-full relative tech-border overflow-hidden">
+              <div className="w-full h-full relative tech-border overflow-hidden">
                 <img 
                   src={`/api/images/${currentImage.id}`}
                   alt={`Generated image: ${currentImage.prompt}`}
-                  className="w-full h-full object-contain bg-card"
+                  className="w-full h-full object-cover bg-card"
                 />
                 
                 {/* Image Actions Overlay */}
-                <div className="absolute top-3 right-3 flex space-x-1">
+                <div className="absolute top-2 right-2 flex space-x-1">
                   <Button 
                     size="sm"
                     variant="secondary"
-                    className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-8 h-8 p-0"
+                    className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-7 h-7 p-0"
                     onClick={handleDownload}
                   >
                     <Download className="h-3 w-3" />
@@ -155,7 +155,7 @@ export default function Home() {
                   <Button 
                     size="sm"
                     variant="secondary"
-                    className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-8 h-8 p-0"
+                    className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-7 h-7 p-0"
                     onClick={handleShare}
                   >
                     <Share2 className="h-3 w-3" />
@@ -164,21 +164,21 @@ export default function Home() {
               </div>
             ) : (
               // Empty State
-              <div className="h-full bg-muted flex flex-col items-center justify-center tech-border border-dashed">
-                <div className="w-16 h-16 flex items-center justify-center">
+              <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border border-dashed">
+                <div className="w-12 h-12 flex items-center justify-center">
                   <svg 
-                    width="64" 
-                    height="64" 
-                    viewBox="0 0 64 64" 
+                    width="48" 
+                    height="48" 
+                    viewBox="0 0 48 48" 
                     className="opacity-60"
                   >
-                    <rect width="64" height="64" fill="#000000" rx="2"/>
+                    <rect width="48" height="48" fill="#000000" rx="2"/>
                     <text 
-                      x="32" 
-                      y="26" 
+                      x="24" 
+                      y="20" 
                       textAnchor="middle" 
                       fill="white" 
-                      fontSize="10" 
+                      fontSize="8" 
                       fontWeight="bold" 
                       fontFamily="JetBrains Mono, monospace"
                       letterSpacing="0.1em"
@@ -186,11 +186,11 @@ export default function Home() {
                       HYPE
                     </text>
                     <text 
-                      x="32" 
-                      y="42" 
+                      x="24" 
+                      y="32" 
                       textAnchor="middle" 
                       fill="white" 
-                      fontSize="10" 
+                      fontSize="8" 
                       fontWeight="bold" 
                       fontFamily="JetBrains Mono, monospace"
                       letterSpacing="0.1em"
@@ -203,10 +203,10 @@ export default function Home() {
             )}
           </div>
 
-          {/* Enhanced Prompt Input with Word Count */}
+          {/* Compact Prompt Input with Word Count */}
           <div className="tech-border silver-glow">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 space-y-3">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="p-3 space-y-2">
                 <FormField
                   control={form.control}
                   name="prompt"
@@ -215,8 +215,8 @@ export default function Home() {
                       <FormControl>
                         <Textarea
                           {...field}
-                          rows={3}
-                          className="w-full px-4 py-3 bg-input border border-border focus:border-primary focus:ring-1 focus:ring-primary/50 text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300 resize-none"
+                          rows={2}
+                          className="w-full px-3 py-2 bg-input border border-border focus:border-primary focus:ring-1 focus:ring-primary/50 text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300 resize-none"
                           placeholder="DESCRIBE YOUR VISION..."
                           maxLength={400}
                         />
@@ -237,12 +237,12 @@ export default function Home() {
                   <Button 
                     type="submit" 
                     disabled={isGenerating || !promptValue.trim() || wordCount > 60}
-                    className="bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-3 font-mono font-bold text-xs tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
+                    className="bg-primary hover:bg-primary/80 text-primary-foreground px-4 py-2 font-mono font-bold text-xs tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
                   >
                     {isGenerating ? (
-                      <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                      <Loader2 className="animate-spin h-3 w-3 mr-2" />
                     ) : (
-                      <Wand2 className="h-4 w-4 mr-2" />
+                      <Wand2 className="h-3 w-3 mr-2" />
                     )}
                     <span>{isGenerating ? "PROCESSING..." : "GENERATE"}</span>
                   </Button>
@@ -253,15 +253,15 @@ export default function Home() {
 
           {/* Image Carousel */}
           {recentImages.length > 0 && (
-            <div className="relative h-24 overflow-hidden">
-              <div className="flex space-x-4 animate-scroll">
+            <div className="relative h-16 overflow-hidden">
+              <div className="flex space-x-2 animate-scroll">
                 {recentImages.map((image, index) => (
                   <div
                     key={image.id}
-                    className="flex-shrink-0 w-24 h-24 relative"
+                    className="flex-shrink-0 w-16 h-16 relative"
                     style={{
-                      filter: `blur(${Math.min(index * 0.5, 3)}px)`,
-                      opacity: Math.max(1 - index * 0.1, 0.2),
+                      filter: `blur(${Math.min(index * 0.3, 2)}px)`,
+                      opacity: Math.max(1 - index * 0.08, 0.3),
                     }}
                   >
                     <img
@@ -273,22 +273,22 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
             </div>
           )}
 
           {/* Generation Complete Cue */}
           {currentImage && !isGenerating && (
-            <div className="flex items-center justify-center mt-4">
+            <div className="flex items-center justify-center">
               <Button
                 variant="outline"
                 onClick={() => {
                   setCurrentImage(null);
                   form.reset();
                 }}
-                className="bg-card/50 border-border text-muted-foreground hover:text-foreground font-mono text-xs tracking-wider transition-all duration-300"
+                className="bg-card/50 border-border text-muted-foreground hover:text-foreground font-mono text-xs tracking-wider transition-all duration-300 h-8"
               >
-                <HomeIcon className="h-3 w-3 mr-2" />
+                <HomeIcon className="h-3 w-3 mr-1" />
                 RETURN TO START
               </Button>
             </div>

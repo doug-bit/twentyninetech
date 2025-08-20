@@ -75,7 +75,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           input: {
             prompt: prompt,
             width: 1024,
-            height: 1024,
+            height: 768, // 4:3 aspect ratio for LED wall portrait mode (2m x 1.5m)
             num_outputs: 1,
             num_inference_steps: 20,
             guidance_scale: 7.5
@@ -102,7 +102,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         imageUrl,
         localPath,
         fileSize: stats.size,
-        resolution: "1024x1024",
+        resolution: "1024x768",
         modelUsed: "stability-ai/sdxl",
       });
 
