@@ -110,8 +110,8 @@ export default function Home() {
       <main className="flex-1 p-6 flex flex-col">
         <div className="max-w-6xl mx-auto flex-1 flex flex-col gap-4">
           
-          {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) - Enlarged */}
-          <div className="w-full max-w-5xl mx-auto aspect-[3/4] relative">
+          {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) - Optimized */}
+          <div className="w-full max-w-[72rem] mx-auto aspect-[3/4] relative">
             {isGenerating ? (
               // Loading State
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border">
@@ -198,7 +198,7 @@ export default function Home() {
           </div>
 
           {/* Sleek Prompt Input - Scaled Up */}
-          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm max-w-5xl mx-auto w-full">
+          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm max-w-[72rem] mx-auto w-full">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
                 <FormField
