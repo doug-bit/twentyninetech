@@ -38,11 +38,11 @@ Preferred communication style: Simple, everyday language.
 ## External Service Integrations
 - **AI Image Generation**: Replicate API integration using authentic "mayaman/maya-29" model with exact schema parameters
   - Model: dev (28 inference steps optimized)
-  - Output format: webp (default for Maya-29)
+  - Output format: png (for LED wall compatibility)
   - Aspect ratio: 3:4 (optimized for LED wall display)
   - Guidance scale: 3 (balanced realism)
-  - File sizes: 68-78KB (confirms authentic webp output vs 1MB+ fake results)
-- **Image Processing**: Automatic download and local storage of generated images with proper webp handling
+  - File sizes: Larger PNG files for maximum LED wall compatibility
+- **Image Processing**: Automatic download and local storage of generated images with PNG format for LED wall compatibility
 - **File Management**: Structured filename generation with timestamps, sanitized prompts, and MM29- prefix for downloads
 
 ## Key Design Patterns

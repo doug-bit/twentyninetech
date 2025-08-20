@@ -57,7 +57,7 @@ function generateFilename(prompt: string): string {
     .replace(/[^a-z0-9\s]/g, '')
     .replace(/\s+/g, '-')
     .substring(0, 50);
-  return `${timestamp}_${sanitizedPrompt}.webp`;
+  return `${timestamp}_${sanitizedPrompt}.png`;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -82,7 +82,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             num_outputs: 1,
             num_inference_steps: 28,
             guidance_scale: 3,
-            output_format: "webp", // Default format as per schema
+            output_format: "png", // PNG format for LED wall compatibility
             output_quality: 90, // High quality for LED display
             prompt_strength: 0.8,
             go_fast: false,
