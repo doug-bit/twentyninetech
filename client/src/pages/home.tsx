@@ -110,139 +110,131 @@ export default function Home() {
   return (
     <div className="h-screen flex flex-col bg-background relative overflow-hidden">
       {/* Main Content - Single Page Layout */}
-      <main className="flex-1 p-4 flex flex-col">
-        <div className="max-w-5xl mx-auto flex-1 flex flex-col gap-4">
+      <main className="flex-1 p-6 flex flex-col">
+        <div className="max-w-4xl mx-auto flex-1 flex flex-col gap-6">
           
-          {/* Image Display - Top Section (60% height) */}
-          <Card className="bg-card tech-border overflow-hidden flex-[3]">
-            <div className="relative h-full">
-              {isGenerating ? (
-                // Loading State
-                <div className="h-full bg-muted flex flex-col items-center justify-center">
-                  <div className="flex space-x-3 mb-8">
-                    <div className="w-4 h-4 bg-primary animate-pulse"></div>
-                    <div className="w-4 h-4 bg-accent animate-pulse" style={{ animationDelay: '0.3s' }}></div>
-                    <div className="w-4 h-4 bg-primary animate-pulse" style={{ animationDelay: '0.6s' }}></div>
-                  </div>
-                  <div className="w-80 bg-border h-1 overflow-hidden">
-                    <div className="bg-gradient-to-r from-primary to-accent h-full animate-pulse transition-all duration-1000" style={{ width: '60%' }}></div>
-                  </div>
-                  <div className="mt-6 text-muted-foreground cyber-text text-xs tracking-widest">
-                    NEURAL PROCESSING
-                  </div>
+          {/* Image Display - Main Section */}
+          <div className="flex-1 relative">
+            {isGenerating ? (
+              // Loading State
+              <div className="h-full bg-muted flex flex-col items-center justify-center tech-border">
+                <div className="flex space-x-2 mb-6">
+                  <div className="w-2 h-2 bg-primary animate-pulse"></div>
+                  <div className="w-2 h-2 bg-accent animate-pulse" style={{ animationDelay: '0.3s' }}></div>
+                  <div className="w-2 h-2 bg-primary animate-pulse" style={{ animationDelay: '0.6s' }}></div>
                 </div>
-              ) : currentImage ? (
-                // Generated Image Display
-                <div className="h-full relative tech-glow">
-                  <img 
-                    src={`/api/images/${currentImage.id}`}
-                    alt={`Generated image: ${currentImage.prompt}`}
-                    className="w-full h-full object-contain"
-                  />
-                  
-                  {/* Image Actions Overlay */}
-                  <div className="absolute top-4 right-4 flex space-x-2">
-                    <Button 
-                      size="sm"
-                      variant="secondary"
-                      className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm tech-border"
-                      onClick={handleDownload}
-                    >
-                      <Download className="h-3 w-3" />
-                    </Button>
-                    <Button 
-                      size="sm"
-                      variant="secondary"
-                      className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm tech-border"
-                      onClick={handleShare}
-                    >
-                      <Share2 className="h-3 w-3" />
-                    </Button>
-                  </div>
+                <div className="w-64 bg-border h-0.5 overflow-hidden">
+                  <div className="bg-gradient-to-r from-primary to-accent h-full animate-pulse transition-all duration-1000" style={{ width: '60%' }}></div>
                 </div>
-              ) : (
-                // Empty State
-                <div className="h-full bg-muted flex flex-col items-center justify-center border-2 border-dashed border-border">
-                  <div className="w-20 h-20 flex items-center justify-center">
-                    <svg 
-                      width="80" 
-                      height="80" 
-                      viewBox="0 0 80 80" 
-                      className="opacity-70"
-                    >
-                      <rect width="80" height="80" fill="#000000" rx="4"/>
-                      <text 
-                        x="40" 
-                        y="32" 
-                        textAnchor="middle" 
-                        fill="white" 
-                        fontSize="12" 
-                        fontWeight="bold" 
-                        fontFamily="JetBrains Mono, monospace"
-                        letterSpacing="0.1em"
-                      >
-                        HYPE
-                      </text>
-                      <text 
-                        x="40" 
-                        y="52" 
-                        textAnchor="middle" 
-                        fill="white" 
-                        fontSize="12" 
-                        fontWeight="bold" 
-                        fontFamily="JetBrains Mono, monospace"
-                        letterSpacing="0.1em"
-                      >
-                        BEAST
-                      </text>
-                    </svg>
-                  </div>
+                <div className="mt-4 text-muted-foreground cyber-text text-xs tracking-widest">
+                  PROCESSING
                 </div>
-              )}
-            </div>
-          </Card>
+              </div>
+            ) : currentImage ? (
+              // Generated Image Display
+              <div className="h-full relative tech-border overflow-hidden">
+                <img 
+                  src={`/api/images/${currentImage.id}`}
+                  alt={`Generated image: ${currentImage.prompt}`}
+                  className="w-full h-full object-contain bg-card"
+                />
+                
+                {/* Image Actions Overlay */}
+                <div className="absolute top-3 right-3 flex space-x-1">
+                  <Button 
+                    size="sm"
+                    variant="secondary"
+                    className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-8 h-8 p-0"
+                    onClick={handleDownload}
+                  >
+                    <Download className="h-3 w-3" />
+                  </Button>
+                  <Button 
+                    size="sm"
+                    variant="secondary"
+                    className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-8 h-8 p-0"
+                    onClick={handleShare}
+                  >
+                    <Share2 className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              // Empty State
+              <div className="h-full bg-muted flex flex-col items-center justify-center tech-border border-dashed">
+                <div className="w-16 h-16 flex items-center justify-center">
+                  <svg 
+                    width="64" 
+                    height="64" 
+                    viewBox="0 0 64 64" 
+                    className="opacity-60"
+                  >
+                    <rect width="64" height="64" fill="#000000" rx="2"/>
+                    <text 
+                      x="32" 
+                      y="26" 
+                      textAnchor="middle" 
+                      fill="white" 
+                      fontSize="10" 
+                      fontWeight="bold" 
+                      fontFamily="JetBrains Mono, monospace"
+                      letterSpacing="0.1em"
+                    >
+                      HYPE
+                    </text>
+                    <text 
+                      x="32" 
+                      y="42" 
+                      textAnchor="middle" 
+                      fill="white" 
+                      fontSize="10" 
+                      fontWeight="bold" 
+                      fontFamily="JetBrains Mono, monospace"
+                      letterSpacing="0.1em"
+                    >
+                      BEAST
+                    </text>
+                  </svg>
+                </div>
+              </div>
+            )}
+          </div>
 
-          {/* Prompt Input - Bottom Section (40% height) */}
-          <Card className="bg-card tech-border silver-glow flex-[2]">
-            <CardContent className="p-6 h-full">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="h-full flex flex-col gap-4">
-                  <FormField
-                    control={form.control}
-                    name="prompt"
-                    render={({ field }) => (
-                      <FormItem className="flex-1">
-                        <FormControl>
-                          <Textarea
-                            {...field}
-                            rows={3}
-                            className="w-full h-full resize-none px-4 py-3 bg-input border border-border focus:border-primary focus:ring-2 focus:ring-primary/50 text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300"
-                            placeholder="DESCRIBE YOUR VISION..."
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <div className="flex items-center justify-end">
-                    <Button 
-                      type="submit" 
-                      disabled={isGenerating || !promptValue.trim()}
-                      className="bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-3 font-mono font-bold text-sm tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
-                    >
-                      {isGenerating ? (
-                        <Loader2 className="animate-spin mr-2 h-4 w-4" />
-                      ) : (
-                        <Wand2 className="mr-2 h-4 w-4" />
-                      )}
-                      <span>{isGenerating ? "PROCESSING..." : "GENERATE"}</span>
-                    </Button>
-                  </div>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
+          {/* Search Bar Style Prompt Input */}
+          <div className="tech-border silver-glow">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-3 p-4">
+                <FormField
+                  control={form.control}
+                  name="prompt"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormControl>
+                        <input
+                          {...field}
+                          className="w-full h-12 px-4 bg-input border border-border focus:border-primary focus:ring-1 focus:ring-primary/50 text-foreground placeholder-muted-foreground font-mono text-sm transition-all duration-300 outline-none"
+                          placeholder="DESCRIBE YOUR VISION..."
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <Button 
+                  type="submit" 
+                  disabled={isGenerating || !promptValue.trim()}
+                  className="bg-primary hover:bg-primary/80 text-primary-foreground px-6 h-12 font-mono font-bold text-xs tracking-wider transition-all duration-300 tech-glow cyber-text disabled:opacity-50"
+                >
+                  {isGenerating ? (
+                    <Loader2 className="animate-spin h-4 w-4" />
+                  ) : (
+                    <Wand2 className="h-4 w-4" />
+                  )}
+                </Button>
+              </form>
+            </Form>
+          </div>
 
         </div>
       </main>

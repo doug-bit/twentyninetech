@@ -40,7 +40,7 @@
   --font-sans: 'Inter', 'JetBrains Mono', sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --radius: 0.25rem;
+  --radius: 0.125rem;
   --surface: hsl(220 15% 10%);
   --tech-red: hsl(0 85% 60%);
   --tech-silver: hsl(0 0% 75%);
