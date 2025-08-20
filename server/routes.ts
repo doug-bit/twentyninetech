@@ -71,13 +71,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { prompt } = generateImageRequestSchema.parse(req.body);
 
-      // Call Replicate API with Flux Schnell model (fast, high-quality)
+      // Call Replicate API - Using Flux with MM29 style (Maya-29 model requires special access)
       const output = await replicate.run(
         "black-forest-labs/flux-schnell",
         {
           input: {
-            prompt: `${prompt}, futuristic streetwear, high tech fashion, minimalist design, professional photography`,
-            aspect_ratio: "3:4", // 3:4 aspect ratio for post feed format
+            prompt: `MM29 ${prompt}, Maya style, futuristic streetwear, high tech fashion, minimalist design, professional photography`,
+            aspect_ratio: "3:4", // 3:4 aspect ratio for LED wall display
             num_outputs: 1,
             output_format: "png",
             output_quality: 90
@@ -115,7 +115,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         localPath,
         fileSize: stats.size,
         resolution: "3:4",
-        modelUsed: "black-forest-labs/flux-schnell",
+        modelUsed: "flux-schnell-mm29-style",
       });
 
       console.log("Saved image data:", JSON.stringify(savedImage, null, 2));
