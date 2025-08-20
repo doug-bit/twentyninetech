@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function Home() {
   const [currentImage, setCurrentImage] = useState<GeneratedImage | null>(null);
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+  const [showImageResult, setShowImageResult] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<GenerateImageRequest>({
@@ -50,6 +51,14 @@ export default function Home() {
         setShowSaveSuccess(true);
         setTimeout(() => setShowSaveSuccess(false), 3000);
         
+        // Show image briefly, then auto-hide to keep interface ready for next user
+        setShowImageResult(true);
+        setTimeout(() => {
+          setShowImageResult(false);
+          setCurrentImage(null);
+          form.reset(); // Clear form for next user
+        }, 5000); // Show image for 5 seconds
+        
         // Automatically download the image to user's computer
         downloadImageToComputer(data.image.id, data.image.prompt);
         
@@ -61,8 +70,6 @@ export default function Home() {
           title: "Image Generated Successfully",
           description: "Your image has been generated and downloaded.",
         });
-        
-        // Keep form content - don't reset to stay on main screen
       }
     },
     onError: (error) => {
@@ -133,7 +140,7 @@ export default function Home() {
                   PROCESSING
                 </div>
               </div>
-            ) : currentImage ? (
+            ) : currentImage && showImageResult ? (
               // Generated Image Display
               <div className="w-full h-full relative tech-border overflow-hidden">
                 <img 
@@ -277,30 +284,12 @@ export default function Home() {
             </div>
           )}
 
-          {/* Image Actions */}
-          {currentImage && !isGenerating && (
-            <div className="flex items-center justify-center gap-3">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setCurrentImage(null);
-                  // Don't reset form - keep the prompt for easy iteration
-                }}
-                className="bg-card/30 border-border/50 text-accent/70 hover:text-foreground hover:bg-card/50 font-mono text-xs tracking-[0.15em] transition-all duration-500 h-8 px-4 font-light lowercase"
-              >
-                generate new
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setCurrentImage(null);
-                  form.reset();
-                }}
-                className="bg-card/30 border-border/50 text-accent/70 hover:text-foreground hover:bg-card/50 font-mono text-xs tracking-[0.15em] transition-all duration-500 h-8 px-4 font-light lowercase"
-              >
-                <HomeIcon className="h-3 w-3 mr-2" />
-                start over
-              </Button>
+          {/* Auto-reset message - shows briefly when image is generated */}
+          {showSaveSuccess && (
+            <div className="flex items-center justify-center">
+              <div className="bg-primary/10 border border-primary/20 rounded px-4 py-2 text-primary font-mono text-sm">
+                Image generated! Interface will reset for next user...
+              </div>
             </div>
           )}
 
