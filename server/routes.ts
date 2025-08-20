@@ -68,18 +68,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { prompt } = generateImageRequestSchema.parse(req.body);
 
-      // Call Replicate API with Maya-29 model
+      // Call Replicate API with Stable Diffusion XL model
       const output = await replicate.run(
-        "mayaman/maya-29",
+        "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
         {
           input: {
             prompt: prompt,
             width: 1024,
             height: 1024,
             num_outputs: 1,
-            num_inference_steps: 28,
-            guidance_scale: 3.5,
-            scheduler: "K_EULER"
+            num_inference_steps: 20,
+            guidance_scale: 7.5
           }
         }
       ) as string[];
@@ -104,7 +103,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         localPath,
         fileSize: stats.size,
         resolution: "1024x1024",
-        modelUsed: "mayaman/maya-29",
+        modelUsed: "stability-ai/sdxl",
       });
 
       res.json({
