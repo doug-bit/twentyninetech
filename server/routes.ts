@@ -77,7 +77,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         {
           input: {
             model: "dev",
-            prompt: `MM29 ${prompt}`,
+            prompt: prompt,
             go_fast: false,
             lora_scale: 1,
             megapixels: "1",
