@@ -49,15 +49,10 @@ export default function Home() {
       if (data.success) {
         setCurrentImage(data.image);
         setShowSaveSuccess(true);
-        setTimeout(() => setShowSaveSuccess(false), 3000);
+        setTimeout(() => setShowSaveSuccess(false), 2000);
         
-        // Show image briefly, then auto-hide to keep interface ready for next user
+        // Show image in preview area only - no auto-hide, user controls reset
         setShowImageResult(true);
-        setTimeout(() => {
-          setShowImageResult(false);
-          setCurrentImage(null);
-          form.reset(); // Clear form for next user
-        }, 5000); // Show image for 5 seconds
         
         // Automatically download the image to user's computer
         downloadImageToComputer(data.image.id, data.image.prompt);
@@ -123,8 +118,8 @@ export default function Home() {
       <main className="flex-1 p-6 flex flex-col">
         <div className="max-w-6xl mx-auto flex-1 flex flex-col gap-4">
           
-          {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) */}
-          <div className="w-full max-w-4xl mx-auto aspect-[3/4] relative">
+          {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) - Enlarged */}
+          <div className="w-full max-w-5xl mx-auto aspect-[3/4] relative">
             {isGenerating ? (
               // Loading State
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border">
@@ -211,7 +206,7 @@ export default function Home() {
           </div>
 
           {/* Sleek Prompt Input - Scaled Up */}
-          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm max-w-4xl mx-auto w-full">
+          <div className="tech-border silver-glow bg-card/30 backdrop-blur-sm max-w-5xl mx-auto w-full">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
                 <FormField
@@ -241,18 +236,33 @@ export default function Home() {
                     )}
                   </div>
                   
-                  <Button 
-                    type="submit" 
-                    disabled={isGenerating || !promptValue.trim() || wordCount > 60}
-                    className="bg-primary/90 hover:bg-primary text-primary-foreground px-8 py-3 font-mono font-medium text-sm tracking-[0.15em] transition-all duration-500 tech-glow disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {isGenerating ? (
-                      <Loader2 className="animate-spin h-4 w-4 mr-2" />
-                    ) : (
-                      <Wand2 className="h-4 w-4 mr-2" />
-                    )}
-                    <span className="lowercase">{isGenerating ? "processing" : "generate"}</span>
-                  </Button>
+                  <div className="flex gap-3">
+                    <Button 
+                      type="button"
+                      onClick={() => {
+                        form.reset();
+                        setCurrentImage(null);
+                        setShowImageResult(false);
+                      }}
+                      className="bg-[#E4002B] hover:bg-[#C8001F] text-white px-6 py-3 font-mono font-medium text-sm tracking-[0.15em] transition-all duration-500 disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      <HomeIcon className="h-4 w-4 mr-2" />
+                      <span className="uppercase">RESET</span>
+                    </Button>
+                    
+                    <Button 
+                      type="submit" 
+                      disabled={isGenerating || !promptValue.trim() || wordCount > 60}
+                      className="bg-primary/90 hover:bg-primary text-primary-foreground px-8 py-3 font-mono font-medium text-sm tracking-[0.15em] transition-all duration-500 tech-glow disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      {isGenerating ? (
+                        <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                      ) : (
+                        <Wand2 className="h-4 w-4 mr-2" />
+                      )}
+                      <span className="lowercase">{isGenerating ? "processing" : "generate"}</span>
+                    </Button>
+                  </div>
                 </div>
               </form>
             </Form>
@@ -284,11 +294,11 @@ export default function Home() {
             </div>
           )}
 
-          {/* Auto-reset message - shows briefly when image is generated */}
+          {/* Success message - shows briefly when image is generated */}
           {showSaveSuccess && (
             <div className="flex items-center justify-center">
-              <div className="bg-primary/10 border border-primary/20 rounded px-4 py-2 text-primary font-mono text-sm">
-                Image generated! Interface will reset for next user...
+              <div className="bg-green-500/10 border border-green-500/20 rounded px-4 py-2 text-green-600 font-mono text-sm">
+                Image generated and downloaded! Use RESET to clear for next user.
               </div>
             </div>
           )}
