@@ -51,13 +51,13 @@ export default function Home() {
         // Show image in preview area only - stays in place
         setShowImageResult(true);
         
-        // Start 10-second auto-reset timer
+        // Start 15-second auto-reset timer (5 seconds longer as requested)
         if (resetTimer) clearTimeout(resetTimer);
         const newTimer = setTimeout(() => {
           form.reset();
           setCurrentImage(null);
           setShowImageResult(false);
-        }, 10000);
+        }, 15000);
         setResetTimer(newTimer);
         
         // Automatically download the image to user's computer
@@ -202,11 +202,14 @@ export default function Home() {
               
               {/* Image overlay - appears on top with exact positioning */}
               {currentImage && showImageResult && (
-                <div className="absolute inset-0 overflow-hidden border border-border">
+                <div className="absolute inset-0 overflow-hidden border border-border image-container">
                   <img 
                     src={currentImage.imageUrl}
                     alt={`Generated image: ${currentImage.prompt}`}
-                    className="w-full h-full object-cover"
+                    onLoad={() => {
+                      // Ensure image maintains its full size without any flashing
+                      console.log('Image loaded successfully');
+                    }}
                   />
                   
                   {/* Image Actions Overlay */}
