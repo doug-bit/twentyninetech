@@ -228,33 +228,18 @@ export default function Home() {
                     )}
                   </div>
                   
-                  <div className="flex gap-3">
-                    <Button 
-                      type="button"
-                      onClick={() => {
-                        form.reset();
-                        setCurrentImage(null);
-                        setShowImageResult(false);
-                      }}
-                      className="bg-[#E4002B] hover:bg-[#C8001F] text-white px-6 py-3 font-mono font-medium text-sm tracking-[0.15em] transition-all duration-500 disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      <HomeIcon className="h-4 w-4 mr-2" />
-                      <span className="uppercase">RESET</span>
-                    </Button>
-                    
-                    <Button 
-                      type="submit" 
-                      disabled={isGenerating || !promptValue.trim() || wordCount > 60}
-                      className="bg-primary/90 hover:bg-primary text-primary-foreground px-8 py-3 font-mono font-medium text-sm tracking-[0.15em] transition-all duration-500 tech-glow disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      {isGenerating ? (
-                        <Loader2 className="animate-spin h-4 w-4 mr-2" />
-                      ) : (
-                        <Wand2 className="h-4 w-4 mr-2" />
-                      )}
-                      <span className="lowercase">{isGenerating ? "processing" : "generate"}</span>
-                    </Button>
-                  </div>
+                  <Button 
+                    type="submit" 
+                    disabled={isGenerating || !promptValue.trim() || wordCount > 60}
+                    className="bg-primary/90 hover:bg-primary text-primary-foreground px-8 py-3 font-mono font-medium text-sm tracking-[0.15em] transition-all duration-500 tech-glow disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    {isGenerating ? (
+                      <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                    ) : (
+                      <Wand2 className="h-4 w-4 mr-2" />
+                    )}
+                    <span className="lowercase">{isGenerating ? "processing" : "generate"}</span>
+                  </Button>
                 </div>
               </form>
             </Form>
@@ -262,11 +247,27 @@ export default function Home() {
 
 
 
+          {/* Reset Button - Positioned below form */}
+          <div className="flex items-center justify-center">
+            <Button 
+              type="button"
+              onClick={() => {
+                form.reset();
+                setCurrentImage(null);
+                setShowImageResult(false);
+              }}
+              className="bg-[#E4002B] hover:bg-[#C8001F] text-white px-8 py-2.5 font-mono font-medium text-sm tracking-[0.15em] transition-all duration-500 tech-border"
+            >
+              <HomeIcon className="h-4 w-4 mr-2" />
+              <span className="uppercase">RESET</span>
+            </Button>
+          </div>
+
           {/* Success message - shows briefly when image is generated */}
           {showSaveSuccess && (
             <div className="flex items-center justify-center">
               <div className="bg-green-500/10 border border-green-500/20 rounded px-4 py-2 text-green-600 font-mono text-sm">
-                Image generated and downloaded! Use RESET to clear for next user.
+                Image generated and downloaded!
               </div>
             </div>
           )}
