@@ -60,7 +60,7 @@ export default function Home() {
         setResetTimer(newTimer);
         
         // Automatically download the image to user's computer
-        downloadImageToComputer(data.image.id, data.image.prompt);
+        downloadImageToComputer(data.image.imageUrl, data.image.prompt);
         
         // Invalidate queries to refresh data
         queryClient.invalidateQueries({ queryKey: ["/api/images/count"] });
@@ -87,10 +87,10 @@ export default function Home() {
 
 
 
-  const downloadImageToComputer = (imageId: string, prompt: string) => {
+  const downloadImageToComputer = (imageUrl: string, prompt: string) => {
     const link = document.createElement('a');
-    link.href = `/api/images/${imageId}`;
-    link.download = `generated-image-${prompt.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+    link.href = imageUrl;
+    link.download = `MM29-${prompt.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -98,7 +98,7 @@ export default function Home() {
 
   const handleDownload = () => {
     if (currentImage) {
-      downloadImageToComputer(currentImage.id, currentImage.prompt);
+      downloadImageToComputer(currentImage.imageUrl, currentImage.prompt);
     }
   };
 
