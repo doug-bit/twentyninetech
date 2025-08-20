@@ -146,39 +146,8 @@ export default function Home() {
               {/* Base preview area - always visible */}
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border border-dashed">
                 {!isGenerating && !currentImage && (
-                  <div className="w-12 h-12 flex items-center justify-center">
-                    <svg 
-                      width="48" 
-                      height="48" 
-                      viewBox="0 0 48 48" 
-                      className="opacity-60"
-                    >
-                      <rect width="48" height="48" fill="#000000" rx="2"/>
-                      <text 
-                        x="24" 
-                        y="20" 
-                        textAnchor="middle" 
-                        fill="white" 
-                        fontSize="8" 
-                        fontWeight="bold" 
-                        fontFamily="JetBrains Mono, monospace"
-                        letterSpacing="0.1em"
-                      >
-                        HYPE
-                      </text>
-                      <text 
-                        x="24" 
-                        y="32" 
-                        textAnchor="middle" 
-                        fill="white" 
-                        fontSize="8" 
-                        fontWeight="bold" 
-                        fontFamily="JetBrains Mono, monospace"
-                        letterSpacing="0.1em"
-                      >
-                        BEAST
-                      </text>
-                    </svg>
+                  <div className="text-muted-foreground/40 text-sm font-mono tracking-wider">
+                    Ready to generate
                   </div>
                 )}
               </div>
