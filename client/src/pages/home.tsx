@@ -29,11 +29,6 @@ export default function Home() {
   // Calculate word count
   const wordCount = promptValue ? promptValue.trim().split(/\s+/).filter(word => word.length > 0).length : 0;
 
-  // Fetch recent images
-  const { data: recentImages = [] } = useQuery<GeneratedImage[]>({
-    queryKey: ["/api/images/recent"],
-  });
-
   // Fetch image count
   const { data: imageCountData } = useQuery<{ count: number }>({
     queryKey: ["/api/images/count"],
@@ -58,7 +53,6 @@ export default function Home() {
         downloadImageToComputer(data.image.id, data.image.prompt);
         
         // Invalidate queries to refresh data
-        queryClient.invalidateQueries({ queryKey: ["/api/images/recent"] });
         queryClient.invalidateQueries({ queryKey: ["/api/images/count"] });
         
         toast({
@@ -81,9 +75,7 @@ export default function Home() {
     generateMutation.mutate(data);
   };
 
-  const handleImageSelect = (image: GeneratedImage) => {
-    setCurrentImage(image);
-  };
+
 
   const downloadImageToComputer = (imageId: string, prompt: string) => {
     const link = document.createElement('a');
@@ -268,31 +260,7 @@ export default function Home() {
             </Form>
           </div>
 
-          {/* Image Carousel */}
-          {recentImages.length > 0 && (
-            <div className="relative h-16 overflow-hidden">
-              <div className="flex space-x-2 animate-scroll">
-                {recentImages.map((image, index) => (
-                  <div
-                    key={image.id}
-                    className="flex-shrink-0 w-16 h-16 relative"
-                    style={{
-                      filter: `blur(${Math.min(index * 0.3, 2)}px)`,
-                      opacity: Math.max(1 - index * 0.08, 0.3),
-                    }}
-                  >
-                    <img
-                      src={`/api/images/${image.id}`}
-                      alt=""
-                      className="w-full h-full object-cover tech-border cursor-pointer hover:filter-none transition-all duration-300"
-                      onClick={() => setCurrentImage(image)}
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
-            </div>
-          )}
+
 
           {/* Success message - shows briefly when image is generated */}
           {showSaveSuccess && (
