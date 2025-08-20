@@ -46,8 +46,10 @@ export default function Home() {
         setShowSaveSuccess(true);
         setTimeout(() => setShowSaveSuccess(false), 2000);
         
-        // Show image in preview area only - no auto-hide, user controls reset
+        // Show image in preview area only - stays in place
         setShowImageResult(true);
+        
+        // Don't reset form - keep prompt visible for next user
         
         // Automatically download the image to user's computer
         downloadImageToComputer(data.image.id, data.image.prompt);
@@ -112,89 +114,95 @@ export default function Home() {
           
           {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) - Optimized */}
           <div className="w-full max-w-[72rem] mx-auto aspect-[3/4] relative">
-            {isGenerating ? (
-              // Loading State
-              <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border">
-                <div className="flex space-x-2 mb-4">
-                  <div className="w-2 h-2 bg-primary animate-pulse"></div>
-                  <div className="w-2 h-2 bg-accent animate-pulse" style={{ animationDelay: '0.3s' }}></div>
-                  <div className="w-2 h-2 bg-primary animate-pulse" style={{ animationDelay: '0.6s' }}></div>
-                </div>
-                <div className="w-48 bg-border h-0.5 overflow-hidden">
-                  <div className="bg-gradient-to-r from-primary to-accent h-full animate-pulse transition-all duration-1000" style={{ width: '60%' }}></div>
-                </div>
-                <div className="mt-3 text-accent/80 font-mono text-xs tracking-[0.3em] font-light">
-                  PROCESSING
-                </div>
-              </div>
-            ) : currentImage && showImageResult ? (
-              // Generated Image Display
-              <div className="w-full h-full relative tech-border overflow-hidden">
-                <img 
-                  src={`/api/images/${currentImage.id}`}
-                  alt={`Generated image: ${currentImage.prompt}`}
-                  className="w-full h-full object-cover bg-card"
-                />
-                
-                {/* Image Actions Overlay */}
-                <div className="absolute top-2 right-2 flex space-x-1">
-                  <Button 
-                    size="sm"
-                    variant="secondary"
-                    className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-7 h-7 p-0"
-                    onClick={handleDownload}
-                  >
-                    <Download className="h-3 w-3" />
-                  </Button>
-                  <Button 
-                    size="sm"
-                    variant="secondary"
-                    className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-7 h-7 p-0"
-                    onClick={handleShare}
-                  >
-                    <Share2 className="h-3 w-3" />
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              // Empty State
+            <div className="w-full h-full relative">
+              {/* Base preview area - always visible */}
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border border-dashed">
-                <div className="w-12 h-12 flex items-center justify-center">
-                  <svg 
-                    width="48" 
-                    height="48" 
-                    viewBox="0 0 48 48" 
-                    className="opacity-60"
-                  >
-                    <rect width="48" height="48" fill="#000000" rx="2"/>
-                    <text 
-                      x="24" 
-                      y="20" 
-                      textAnchor="middle" 
-                      fill="white" 
-                      fontSize="8" 
-                      fontWeight="bold" 
-                      fontFamily="JetBrains Mono, monospace"
-                      letterSpacing="0.1em"
+                {!isGenerating && !currentImage && (
+                  <div className="w-12 h-12 flex items-center justify-center">
+                    <svg 
+                      width="48" 
+                      height="48" 
+                      viewBox="0 0 48 48" 
+                      className="opacity-60"
                     >
-                      HYPE
-                    </text>
-                    <text 
-                      x="24" 
-                      y="32" 
-                      textAnchor="middle" 
-                      fill="white" 
-                      fontSize="8" 
-                      fontWeight="bold" 
-                      fontFamily="JetBrains Mono, monospace"
-                      letterSpacing="0.1em"
-                    >
-                      BEAST
-                    </text>
-                  </svg>
-                </div>
+                      <rect width="48" height="48" fill="#000000" rx="2"/>
+                      <text 
+                        x="24" 
+                        y="20" 
+                        textAnchor="middle" 
+                        fill="white" 
+                        fontSize="8" 
+                        fontWeight="bold" 
+                        fontFamily="JetBrains Mono, monospace"
+                        letterSpacing="0.1em"
+                      >
+                        HYPE
+                      </text>
+                      <text 
+                        x="24" 
+                        y="32" 
+                        textAnchor="middle" 
+                        fill="white" 
+                        fontSize="8" 
+                        fontWeight="bold" 
+                        fontFamily="JetBrains Mono, monospace"
+                        letterSpacing="0.1em"
+                      >
+                        BEAST
+                      </text>
+                    </svg>
+                  </div>
+                )}
               </div>
-            )}
+              
+              {/* Loading overlay */}
+              {isGenerating && (
+                <div className="absolute inset-0 bg-muted/95 flex flex-col items-center justify-center tech-border">
+                  <div className="flex space-x-2 mb-4">
+                    <div className="w-2 h-2 bg-primary animate-pulse"></div>
+                    <div className="w-2 h-2 bg-accent animate-pulse" style={{ animationDelay: '0.3s' }}></div>
+                    <div className="w-2 h-2 bg-primary animate-pulse" style={{ animationDelay: '0.6s' }}></div>
+                  </div>
+                  <div className="w-48 bg-border h-0.5 overflow-hidden">
+                    <div className="bg-gradient-to-r from-primary to-accent h-full animate-pulse transition-all duration-1000" style={{ width: '60%' }}></div>
+                  </div>
+                  <div className="mt-3 text-accent/80 font-mono text-xs tracking-[0.3em] font-light">
+                    PROCESSING
+                  </div>
+                </div>
+              )}
+              
+              {/* Image overlay - appears on top */}
+              {currentImage && showImageResult && (
+                <div className="absolute inset-0 tech-border overflow-hidden">
+                  <img 
+                    src={`/api/images/${currentImage.id}`}
+                    alt={`Generated image: ${currentImage.prompt}`}
+                    className="w-full h-full object-cover bg-card"
+                  />
+                  
+                  {/* Image Actions Overlay */}
+                  <div className="absolute top-2 right-2 flex space-x-1">
+                    <Button 
+                      size="sm"
+                      variant="secondary"
+                      className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-7 h-7 p-0"
+                      onClick={handleDownload}
+                    >
+                      <Download className="h-3 w-3" />
+                    </Button>
+                    <Button 
+                      size="sm"
+                      variant="secondary"
+                      className="bg-card/95 hover:bg-card border border-border text-foreground backdrop-blur-sm w-7 h-7 p-0"
+                      onClick={handleShare}
+                    >
+                      <Share2 className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Sleek Prompt Input - Scaled Up */}
