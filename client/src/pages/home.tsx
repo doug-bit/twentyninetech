@@ -140,8 +140,8 @@ export default function Home() {
       <main className="flex-1 p-6 flex flex-col">
         <div className="max-w-7xl mx-auto flex-1 flex flex-col gap-3">
           
-          {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) - Enlarged */}
-          <div className="w-full max-w-[80rem] mx-auto aspect-[3/4] relative">
+          {/* Image Display - LED Wall 3:4 Aspect Ratio (3 units wide by 4 units tall) - Extra Large */}
+          <div className="w-full max-w-[90rem] mx-auto aspect-[3/4] relative">
             <div className="w-full h-full relative">
               {/* Base preview area - always visible */}
               <div className="w-full h-full bg-muted flex flex-col items-center justify-center tech-border border-dashed">
