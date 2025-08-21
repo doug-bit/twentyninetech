@@ -2,16 +2,6 @@
 
 A Node.js wrapper application for the Replicate API featuring an ultra-minimal interface designed for LED wall display. Uses the authentic Maya-29 model for generating high-quality images in 3:4 aspect ratio.
 
-## Features
-
-- **Authentic Maya-29 Model**: Uses the genuine mayaman/maya-29 model with exact schema parameters
-- **LED Wall Optimized**: 3:4 aspect ratio perfect for 1.5m x 2m LED panels
-- **PNG Format**: High-quality PNG output for maximum LED wall compatibility
-- **Automatic Download**: Every generated image is automatically downloaded with MM29- prefix
-- **Futuristic Design**: Sleek streetwear aesthetic with tech-inspired UI
-- **Kiosk Mode**: Designed for continuous public use with auto-reset functionality
-- **15-Second Display**: Images stay visible for 15 seconds before auto-reset
-
 ## Tech Stack
 
 - **Frontend**: React with TypeScript, Vite build system
